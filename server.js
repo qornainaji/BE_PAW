@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 
 app.set('view engine', 'ejs')
+app.use(logger)
 
 app.get('/', (req, res) => {
   console.log('Server is running')
@@ -13,6 +14,11 @@ app.get('/', (req, res) => {
 const userRoutes = require('./routes/users')
 
 app.use('/users', userRoutes)
+
+function logger(req, res, next) {
+  console.log(req.originalUrl)
+  next()
+}
 
 app.listen(3000, () => {
   console.log('halo 3000')
