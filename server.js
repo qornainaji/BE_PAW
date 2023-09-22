@@ -10,6 +10,10 @@ app.get('/', (req, res) => {
   res.render('index', { name: "User" })
 })
 
+const userRoutes = require('./routes/users')
+
+app.use('/users', userRoutes)
+
 app.listen(3000, () => {
   console.log('halo 3000')
 })
