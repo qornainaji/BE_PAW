@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const app = express()
 const userRoutes = require('./routes/users')
 
-//app.use(express.json())
+app.use(express.json())
 
 app.use(express.static('public'))
 
