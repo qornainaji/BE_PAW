@@ -4,7 +4,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 
-app.use(logger)
+// app.use(logger)
 
 app.use(express.static('public'))
 
