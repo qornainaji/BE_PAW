@@ -7,6 +7,7 @@ const userRoutes = require('./routes/users')
 const documentRoutes = require('./routes/document')
 
 app.use(express.json())
+app.use(express.urlencoded({ extended: true })
 
 app.use(express.static('public'))
 
