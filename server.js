@@ -4,8 +4,13 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 
+app.use(logger)
+
+app.use(express.static('public'))
+
 app.get('/', (req, res) => {
-    res.json({mssg: "Halo GAMADA 2023"})
+  console.log('Server is running')
+  res.json({msg: "Academia TETI"})
 })
 
 mongoose.connect(process.env.MONGO_URI)
