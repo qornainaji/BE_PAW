@@ -34,12 +34,6 @@ router.route('/:id')
         res.send(`delete user ${req.params.id}`)
     })
 
-const dummyUsers = [
-    { id: 1, name: 'John' },
-    { id: 2, name: 'Doe' },
-    { id: 3, name: 'Smith' }
-]
-
 // Middleware for ID Parameter
 router.param('id', (req, res, next, id) => {
     console.log(`User ${id} is found`)

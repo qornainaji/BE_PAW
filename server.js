@@ -9,6 +9,8 @@ app.use(express.json())
 
 app.use(express.static('public'))
 
+app.use('/users', userRoutes)
+
 app.get('/', (req, res) => {
   console.log('Server is running')
   res.send("<h1>Academia TETI</h1>")
