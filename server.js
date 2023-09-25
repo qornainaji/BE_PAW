@@ -3,8 +3,13 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
+const userRoutes = require('./routes/users')
+
+app.use(express.json())
 
 app.use(express.static('public'))
+
+app.use('/users', userRoutes)
 
 app.get('/', (req, res) => {
   console.log('Server is running')
