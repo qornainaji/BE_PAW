@@ -4,13 +4,18 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 const userRoutes = require('./routes/users')
+<<<<<<< HEAD
 const documentRoutes = require('./routes/document')
+=======
+const documentsRoutes = require('./routes/documents')
+>>>>>>> 7c4cce853f0888c045de0c9ff212d2ab71a511ba
 
 app.use(express.json())
 
 app.use(express.static('public'))
 
 app.use('/users', userRoutes)
+app.use('/documents', documentsRoutes)
 
 app.use('/document', documentRoutes)
 
