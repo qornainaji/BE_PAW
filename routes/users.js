@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const Users = require('../models/usersModel')
 
 router.get('/', (req, res) => {
     res.send('all users')
@@ -9,8 +10,15 @@ router.get('/new', (req, res) => {
     res.send('new user')
 })
 
-router.post('/', (req, res) => {
-    res.send('create user')
+router.post('/', async (req, res) => {
+    const {user_nama, user_password, user_email, user_NIM, user_isAdmin} = req.body
+
+    try {
+        const users = await Users.create({user_nama, user_password, user_email, user_NIM, user_isAdmin})
+        res.status(200).json(users)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 })
 
 // Router with ID Parameter
