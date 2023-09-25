@@ -8,8 +8,7 @@ app.use(express.static('public'))
 
 app.get('/', (req, res) => {
   console.log('Server is running')
-  // res.json({mssg: "Halo GAMADA 2023"})
-  res.render('index', { name: "User" })
+  res.json({msg: "Academia TETI"})
 })
 
 const userRoutes = require('./routes/users')
