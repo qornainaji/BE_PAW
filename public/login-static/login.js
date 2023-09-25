@@ -16,7 +16,7 @@ function sendLoginInfo() {
 
     var xhr = new XMLHttpRequest();
     // xhr.open("POST", "/users/login");
-    xhr.open("GET", "/users");
+    // xhr.open("GET", "/users");
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhr.send(JSON.stringify({
         username: username,
