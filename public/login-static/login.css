@@ -35,6 +35,13 @@ button {
     display: block;
 }
 
+/* disabled button */
+button[disabled] {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}
+
 button:hover {
     opacity: 0.8;
 }
