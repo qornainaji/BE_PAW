@@ -11,10 +11,10 @@ router.get('/new', (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    const {user_nama, user_password, user_email, user_NIM, user_isAdmin} = req.body
+    const {user_name, user_password, user_email, user_NIM, user_isAdmin} = req.body
 
     try {
-        const users = await Users.create({user_nama, user_password, user_email, user_NIM, user_isAdmin})
+        const users = await Users.create({user_name, user_password, user_email, user_NIM, user_isAdmin})
         res.status(200).json(users)
     } catch (error) {
         res.status(400).json({error: error.message})

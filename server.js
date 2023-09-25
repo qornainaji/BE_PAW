@@ -4,12 +4,15 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 const userRoutes = require('./routes/users')
+const documentRoutes = require('./routes/document')
 
 app.use(express.json())
 
 app.use(express.static('public'))
 
 app.use('/users', userRoutes)
+
+app.use('/document', documentRoutes)
 
 app.get('/', (req, res) => {
   console.log('Server is running')
