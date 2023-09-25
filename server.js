@@ -3,14 +3,15 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
+const userRoutes = require('./routes/users')
 
-// app.use(logger)
+app.use(express.json())
 
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
   console.log('Server is running')
-  res.json({msg: "Academia TETI"})
+  res.send("<h1>Academia TETI</h1>")
 })
 
 mongoose.connect(process.env.MONGO_URI)
