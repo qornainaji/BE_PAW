@@ -4,7 +4,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 const userRoutes = require('./routes/users')
-const documentRoutes = require('./routes/document')
+const documentRoutes = require('./routes/documents')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
