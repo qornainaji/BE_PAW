@@ -35,7 +35,20 @@ const updateDocument = async (req, res) => {
 
 // delete a document
 const deleteDocument = async (req, res) => {
-    res.send('delete document')
+    const documentId = req.params.id;
+    
+    try {
+        // Use Mongoose to find the document by ID and remove it
+        const deletedDocument = await Document.findByIdAndRemove(documentId);
+
+        if (!deletedDocument) {
+            return res.status(404).json({ error: 'Document not found' });
+        }
+
+        res.status(200).json({ message: 'Document deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 }
 
 module.exports = {
