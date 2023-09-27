@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
 app.use('/users', userRoutes)
-app.use('/document', documentRoutes)
+app.use('/documents', documentRoutes)
 
 app.get('/', (req, res) => {
   console.log('Server is running')

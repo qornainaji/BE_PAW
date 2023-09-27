@@ -2,8 +2,13 @@ const mongoose = require('mongoose')
 const Document = require('../models/documentModel')
 
 // get all documents
-const getDocuments = (req, res) => {
-    res.send('get all document')
+const getDocuments = async (req, res) => {
+    try {
+        const document = await Document.find({}).sort({createdAt: -1})
+        res.status(200).json(document)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 }
 
 // get a single document
