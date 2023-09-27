@@ -13,7 +13,16 @@ const getUsers = async (req, res) => {
 
 // get single user
 const getUser = async (req, res) => {
-    res.send('single user')
+    try {
+        const userId = req.params.id
+        user = await User.find(user => user.id === userId)
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+          }
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 }
 
 // create new user
