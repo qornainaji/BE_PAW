@@ -31,22 +31,22 @@ const createUser = async (req, res) => {
 
 // update user
 const updateUser = async (req, res) => {
-    const {user_nama, user_password, user_email, user_NIM, user_isAdmin} = req.body
+    const { user_name, user_password, user_email, user_NIM, user_isAdmin } = req.body;
     const userId = req.params.id;
     try {
         const user = await User.findOneAndUpdate(
-            {_id: userId},
+            { _id: userId },
             {
-                user_nama, user_password, user_email, user_NIM, user_isAdmin
+                user_name, user_password, user_email, user_NIM, user_isAdmin
             },
-            {new: true} // return the updated data
+            { new: true } // return the updated data
         );
-        if (!update){
-            return res.status(404).json({error: 'User not found'});
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
         }
-        res.status(200).json(user) 
+        res.status(200).json(user);
     } catch (error) {
-        res.status(400).json({error: error.message})
+        res.status(400).json({ error: error.message });
     }
 }
 
