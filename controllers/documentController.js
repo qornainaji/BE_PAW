@@ -12,8 +12,14 @@ const getDocuments = async (req, res) => {
 }
 
 // get a single document
-const getDocument = (req, res) => {
-    res.send('get single document')
+const getDocument = async (req, res) => {
+    try {
+        const documentId = req.params.id
+        const document = await Document.findById(documentId)
+        res.status(200).json(document)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 }
 
 // create a new document
