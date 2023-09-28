@@ -99,15 +99,23 @@ const login = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(user_password, salt);
 
-    const user = await User.findOne({ user_name });
+    User.findOne({ user_name })
+        .then(user => {
+            if (!user) console.log('user not found')
+            if (!user) return res.status(400).json({ message: 'Invalid username or password' });
 
-    if (!user) return res.status(400).json({ message: 'Invalid username or password' });
+            console.log("User Input: " + user_password + "\n" +"Stored Password: " + user.user_password);
 
-    const validPassword = await bcrypt.compare(hashedPassword, user.user_password);
-    if (!validPassword) return res.status(400).json({ message: 'Invalid username or password' });
+            if (user_password != user.user_password) console.log('password not match')
+            if (user_password != user.user_password) return res.status(400).json({ message: 'Invalid username or password' });
 
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.status(200).json({ token });
+            const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            console.log("JWT Secret: " + process.env.JWT_SECRET + "\nJWT Token: " + token);
+            // Set cookie
+            res.cookie('token', token, { httpOnly: true, maxAge: 3600000, domain: 'localhost' });
+            res.status(200).json({ token });
+        })
+        .catch(err => console.log(err))
 }
 
 module.exports = {

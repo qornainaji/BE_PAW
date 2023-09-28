@@ -21,7 +21,7 @@ app.use('/documents', documentRoutes)
 app.get('/protected', authMiddleware, (req, res) => {
   // If the user is authenticated, the middleware will attach the user data to the request object
   // We can then use it to return a personalized response
-  res.send(`Welcome ${req.user.user_name}!`)
+  res.send(`Welcome ${req.user._id}!`)
 })
 
 app.get('/login', (req, res) => {

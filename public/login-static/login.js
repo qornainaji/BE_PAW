@@ -28,7 +28,8 @@ function sendLoginInfo() {
         headers: {
             "Content-Type": "application/json;charset=UTF-8"
         },
-        body: userData
+        body: userData,
+        credentials: "same-origin"
     })
     .then(response => {
         if (response.ok) {
@@ -38,11 +39,13 @@ function sendLoginInfo() {
         }
     })
     .then(data => {
-        if (data.success) {
-            window.location.href = "/protected";
-        } else {
-            alert("Username atau password salah");
-        }
+        // console.log(data);
+        // alert(data.token);
+        // Redirect to homepage
+        window.location.replace("/protected");
+    })
+    .then(() => {
+        alert("Login successful");
     })
     .catch(error => {
         console.error("Fetch error:", error);
