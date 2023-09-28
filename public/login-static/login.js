@@ -15,19 +15,19 @@ function sendLoginInfo() {
     var password = loginInfo[1];
 
     var xhr = new XMLHttpRequest();
-    // xhr.open("POST", "/users/login");
+    xhr.open("POST", "/users/login");
     // xhr.open("GET", "/users");
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhr.send(JSON.stringify({
-        username: username,
-        password: password
+        user_name: username,
+        user_password: password
     }));
 
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var response = JSON.parse(this.responseText);
             if (response.success) {
-                window.location.href = "/dashboard";
+                window.location.href = "/";
             } else {
                 alert("Username atau password salah");
             }
@@ -50,11 +50,11 @@ function checkUsername() {
 
 document.addEventListener("DOMContentLoaded", function () {
     console.log("DOMContentLoaded");
-    checkUsername();
+    // checkUsername();
 
     // Add event listener to username field
-    var usernameField = document.getElementById("username");
-    usernameField.addEventListener("input", checkUsername);
+    // var usernameField = document.getElementById("username");
+    // usernameField.addEventListener("input", checkUsername);
 
     // Add event listener to login button
     var loginButton = document.getElementById("login-button");

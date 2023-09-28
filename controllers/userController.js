@@ -81,7 +81,8 @@ const deleteUser = async (req, res) => {
     }
 }
 
-exports.register = async (req, res) => {
+// register user
+const register = async (req, res) => {
     const { user_name, user_password, user_email, user_NIM, user_isAdmin } = req.body;
     const user = new User({ user_name, user_password, user_email, user_NIM, user_isAdmin });
     await user.save();
@@ -90,13 +91,19 @@ exports.register = async (req, res) => {
     res.status(200).json({ token });
 }
 
-exports.login = async (req, res) => {
+// login user
+const login = async (req, res) => {
     const { user_name, user_password } = req.body;
+
+    // encrypt user_password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(user_password, salt);
+
     const user = await User.findOne({ user_name });
 
     if (!user) return res.status(400).json({ message: 'Invalid username or password' });
 
-    const validPassword = await bcrypt.compare(user_password, user.user_password);
+    const validPassword = await bcrypt.compare(hashedPassword, user.user_password);
     if (!validPassword) return res.status(400).json({ message: 'Invalid username or password' });
 
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -108,5 +115,7 @@ module.exports = {
     getUser,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    register,
+    login
 }
