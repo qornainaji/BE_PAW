@@ -23,12 +23,14 @@ app.use(express.static('public'))
 app.use('/users', userRoutes)
 app.use('/documents', documentRoutes)
 
+// Protected route, authMiddleware will check for a valid JWT
 app.get('/protected', authMiddleware, (req, res) => {
   // If the user is authenticated, the middleware will attach the user data to the request object
   // We can then use it to return a personalized response
   res.send(`Welcome ${req.user._id}!`)
 })
 
+// Login and register routes
 app.get('/login', (req, res) => {
   res.sendFile(__dirname + '/public/login-static/login.html')
 })
@@ -37,9 +39,10 @@ app.get('/register', (req, res) => {
   res.sendFile(__dirname + '/public/register/register.html')
 })
 
+// Home route
 app.get('/', (req, res) => {
   console.log('Server is running')
-  res.send("<h1>Academia TETI</h1>")
+  res.send("<h1>Academia TETI</h1><p>Server is running</p>")
 })
 
 // Connect to MongoDB
