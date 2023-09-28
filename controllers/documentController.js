@@ -71,10 +71,54 @@ const deleteDocument = async (req, res) => {
     }
 }
 
+// // delete multiple documents
+// // const deleteDocuments = async (req, res) => {
+// //     const documentIdsToDelete = req.query.ids;
+  
+// //     if (!documentIdsToDelete || !Array.isArray(documentIdsToDelete) || documentIdsToDelete.length === 0) {
+// //       return res.status(400).json({ error: 'Invalid request format' });
+// //     }
+  
+// //     try {
+// //       // Use Mongoose to delete multiple documents by their IDs
+// //       const result = await Document.deleteMany({ _id: { $in: documentIdsToDelete } });
+  
+// //       if (result.deletedCount === 0) {
+// //         return res.status(404).json({ error: 'No documents found to delete' });
+// //       }
+  
+// //       res.status(200).json({ message: 'Documents deleted successfully' });
+// //     } catch (error) {
+// //       res.status(500).json({ error: error.message });
+// //     }
+// //   }
+
+// const deleteDocuments = async (req, res) => {
+//     try {
+//         // const collectionName = 'your_collection_name'; // Replace with your collection name
+//         // const collection = db.collection(collectionName);
+    
+//         const documentIdsToDelete = req.query.ids; // Get an array of ObjectIds from the request body
+    
+//         // Convert the array of string ObjectIds to ObjectId objects
+//         const documentIdsToDeleteArray = documentIdsToDelete.map((id) => ObjectId(id));
+//         console.log('Array of Document IDs to Delete:', documentIdsToDeleteArray);
+    
+//         // Use the deleteMany method to delete documents by ObjectIds
+//         const result = await Document.deleteMany({ _id: { $in: documentIdsToDeleteArray } });
+    
+//         res.status(200).json({ message: `${result.deletedCount} documents deleted` });
+//       } catch (error) {
+//         console.error('Error deleting documents:', error);
+//         res.status(500).json({ error: 'Error deleting documents' });
+//       }
+//   }
+
 module.exports = {
     getDocuments,
     getDocument,
     createDocument,
     updateDocument,
-    deleteDocument
+    deleteDocument,
+    // deleteDocuments
 }

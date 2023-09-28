@@ -4,7 +4,8 @@ const {
     getDocument,
     createDocument,
     updateDocument,
-    deleteDocument
+    deleteDocument,
+    // deleteDocuments
 } = require('../controllers/documentController')
 
 const router = express.Router()
@@ -23,5 +24,8 @@ router.patch('/:id', updateDocument)
 
 // DELETE a document
 router.delete('/:id', deleteDocument)
+
+// // DELETE multiple documents
+// router.delete('/delete-multiple', deleteDocuments)
 
 module.exports = router
