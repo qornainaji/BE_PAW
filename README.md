@@ -43,24 +43,26 @@
 ## Attachment
 
 ### Use Case Diagram
+
 **Description:** Simple diagram for use case made on Figma.
-![Use Case Diagram](https://www.proxydrive.io/view?id=1knK78q4RKZHXw34k-Q23XLhHm_1qExpc)
+
+![Use Case Diagram](https://drive.google.com/uc?id=1knK78q4RKZHXw34k-Q23XLhHm_1qExpc)
 
 
 ### Activity Diagram
 
 **Description:** Simple diagram for activity diagram made on Figma.
 
-![Activity Diagram - Pengguna](https://www.proxydrive.io/view?id=1Zk6IVgJmLG5FRkTenohDzFgV2m8TVPFP)
+![Activity Diagram - Pengguna](https://drive.google.com/uc?id=1Zk6IVgJmLG5FRkTenohDzFgV2m8TVPFP)
 
-![Activity Diagram - Admin](https://www.proxydrive.io/view?id=1HRfopmZCKo0fx3PzCQT1Jioxfllcbneo)
+![Activity Diagram - Admin](https://drive.google.com/uc?id=1HRfopmZCKo0fx3PzCQT1Jioxfllcbneo)
 
 
 ### Entity Relationship Diagram
 
 **Description:** Simple diagram for ERD made on Figma.
 
-![ERD](https://www.proxydrive.io/view?id=1EJw0nOB0d0lYQ502YqIXgjZXBI3fb9hp)
+![ERD](https://drive.google.com/uc?id=1EJw0nOB0d0lYQ502YqIXgjZXBI3fb9hp)
 
 
 ## Related Repositories
