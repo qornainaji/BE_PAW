@@ -7,7 +7,9 @@ const userRoutes = require('./routes/users')
 const documentRoutes = require('./routes/documents')
 const authMiddleware = require('./middleware/authMiddleware')
 const bodyParser = require('body-parser');
+const morgan = require('morgan');
 
+app.use(morgan('dev'));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 

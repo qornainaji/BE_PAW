@@ -12,15 +12,15 @@ const usersSchema = new mongoose.Schema({
     },
     user_email: {
         type: String,
-        required: true
+        required: false
     },
     user_NIM: {
         type: String,
-        required: true
+        required: false
     },
     user_isAdmin: {
         type: Boolean,
-        required: true
+        required: false
     }
 }, { timestamps: true })
 

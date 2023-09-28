@@ -7,33 +7,48 @@ function getLoginInfo() {
     return [username, password];
 }
 
-// Send login info to server
+// Send username and password to server
 function sendLoginInfo() {
     console.log("sendLoginInfo() called");
     var loginInfo = getLoginInfo();
     var username = loginInfo[0];
     var password = loginInfo[1];
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/users/login");
-    // xhr.open("GET", "/users");
-    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhr.send(JSON.stringify({
+    // Create a JSON object with the user data
+    var userData = JSON.stringify({
         user_name: username,
         user_password: password
-    }));
+    });
 
-    xhr.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var response = JSON.parse(this.responseText);
-            if (response.success) {
-                window.location.href = "/";
-            } else {
-                alert("Username atau password salah");
-            }
+    alert(userData);
+
+    // Send a POST request using Fetch
+    fetch("/users/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json;charset=UTF-8"
+        },
+        body: userData
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error("Network response was not ok");
         }
-    }
+    })
+    .then(data => {
+        if (data.success) {
+            window.location.href = "/protected";
+        } else {
+            alert("Username atau password salah");
+        }
+    })
+    .catch(error => {
+        console.error("Fetch error:", error);
+    });
 }
+
 
 // Function to always check the username field. If it doesn't contain "@mail.ugm.ac.id", disable the login button
 function checkUsername() {
@@ -58,6 +73,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Add event listener to login button
     var loginButton = document.getElementById("login-button");
-    loginButton.addEventListener("click", sendLoginInfo);
+    // loginButton.addEventListener("click", sendLoginInfo);
+    // add preventDefault() to loginButton
+    loginButton.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        sendLoginInfo();
+    });
 }
 );
