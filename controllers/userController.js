@@ -90,6 +90,19 @@ exports.register = async (req, res) => {
     res.status(200).json({ token });
 }
 
+exports.login = async (req, res) => {
+    const { user_name, user_password } = req.body;
+    const user = await User.findOne({ user_name });
+
+    if (!user) return res.status(400).json({ message: 'Invalid username or password' });
+
+    const validPassword = await bcrypt.compare(user_password, user.user_password);
+    if (!validPassword) return res.status(400).json({ message: 'Invalid username or password' });
+
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.status(200).json({ token });
+}
+
 module.exports = {
     getUsers,
     getUser,

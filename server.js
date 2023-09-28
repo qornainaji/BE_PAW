@@ -5,7 +5,8 @@ const mongoose = require('mongoose')
 const app = express()
 const userRoutes = require('./routes/users')
 const documentRoutes = require('./routes/documents')
-const jwt = require('jsonwebtoken');
+const authMiddleware = require('./middleware/authMiddleware')
+const bodyParser = require('body-parser');
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -14,6 +15,18 @@ app.use(express.static('public'))
 
 app.use('/users', userRoutes)
 app.use('/documents', documentRoutes)
+
+app.get('/protected', authMiddleware, (req, res) => {
+  res.send('This is a protected route')
+})
+
+app.get('/login', (req, res) => {
+  res.sendFile(__dirname + '/public/login-static/login.html')
+})
+
+app.get('/register', (req, res) => {
+  res.sendFile(__dirname + '/public/register/register.html')
+})
 
 app.get('/', (req, res) => {
   console.log('Server is running')
