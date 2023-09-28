@@ -9,22 +9,23 @@
 - Rafly Zaki Ramadhan - (21/483121/TK/53403)
 - Siti Nadiah
 
+
 ## Documentation
 
-## User
+### User
 
 **Description:** The End user, there will be two type of user: Pengguna and Admin.
 
 **Database Route:** `/users`
 
 **Parameters:**
-- `username`: string
+- `user_name`: string
 - `user_password`: string
 - `user_email`: string
 - `user_NIM`: string
 - `user_isAdmin`: Boolean
 
-## Document
+### Document
 
 **Description:** File documents for TETI task, book, pdf, and question.
 
@@ -39,6 +40,7 @@
 - `doc_view`: number
 - `doc_date_upload`: date
 - `doc_download`: number
+
 
 ## Attachment
 
