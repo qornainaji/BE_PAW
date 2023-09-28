@@ -30,16 +30,5 @@ mongoose.connect(process.env.MONGO_URI)
     console.log(error)
   })
 
-function authenticateJWT(req, res, next) {
-  const token = req.header('x-auth-token');
-  if (!token) return res.status(401).send('Access denied. No token provided.');
-
-  jwt.verify(token, 'your_secret_key', (err, user) => {
-      if (err) return res.sendStatus(403);
-      req.user = user;
-      next();
-  });
-}
-
 // PORT=4000
 // MONGO_URI=mongodb+srv://ahmadfauzan190603:pojanPAW@academiateti.snpla5s.mongodb.net/?retryWrites=true&w=majority

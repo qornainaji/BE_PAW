@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const mongoose = require('mongoose')
 const User = require('../models/userModel')
 const bcrypt = require('bcrypt');
@@ -77,6 +79,15 @@ const deleteUser = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
+}
+
+exports.register = async (req, res) => {
+    const { user_name, user_password, user_email, user_NIM, user_isAdmin } = req.body;
+    const user = new User({ user_name, user_password, user_email, user_NIM, user_isAdmin });
+    await user.save();
+
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.status(200).json({ token });
 }
 
 module.exports = {
