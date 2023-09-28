@@ -26,6 +26,7 @@ const getDocument = async (req, res) => {
 const createDocument = async (req, res) => {
     const {doc_title, doc_year, doc_major, doc_description, doc_link, doc_view, doc_date_upload, doc_download} = req.body
 
+    // add to database
     try {
         const document = await Document.create({doc_title, doc_year, doc_major, doc_description, doc_link, doc_view, doc_date_upload, doc_download})
         res.status(200).json(document)
