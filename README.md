@@ -16,7 +16,7 @@
 
 **Description:** The End user, there will be two type of user: Pengguna and Admin.
 
-**Database Route:** `/users`
+**Route:** `/users`
 
 **Parameters:**
 - `user_name`: string
@@ -29,7 +29,7 @@
 
 **Description:** File documents for TETI task, book, pdf, and question.
 
-**Database Route:** `/documents`
+**Route:** `/documents`
 
 **Parameters:**
 - `doc_title`: string
