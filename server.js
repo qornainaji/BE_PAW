@@ -9,12 +9,17 @@ const authMiddleware = require('./middleware/authMiddleware')
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
+// Morgan for monitoring
 app.use(morgan('dev'));
+
+// Body parser
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+// Use static files
 app.use(express.static('public'))
 
+// Routes
 app.use('/users', userRoutes)
 app.use('/documents', documentRoutes)
 
@@ -37,6 +42,7 @@ app.get('/', (req, res) => {
   res.send("<h1>Academia TETI</h1>")
 })
 
+// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     app.listen(4000, () => {
