@@ -1,5 +1,9 @@
+require('dotenv').config()
+
 const mongoose = require('mongoose')
 const User = require('../models/userModel')
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 // get all user
 const getUsers = async (req, res) => {
@@ -77,10 +81,41 @@ const deleteUser = async (req, res) => {
     }
 }
 
+// register user
+const register = async (req, res) => {
+    const { user_name, user_password, user_email, user_NIM, user_isAdmin } = req.body;
+    const user = new User({ user_name, user_password, user_email, user_NIM, user_isAdmin });
+    await user.save();
+
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.status(200).json({ token });
+}
+
+// login user
+const login = async (req, res) => {
+    const { user_name, user_password } = req.body;
+
+    // encrypt user_password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(user_password, salt);
+
+    const user = await User.findOne({ user_name });
+
+    if (!user) return res.status(400).json({ message: 'Invalid username or password' });
+
+    const validPassword = await bcrypt.compare(hashedPassword, user.user_password);
+    if (!validPassword) return res.status(400).json({ message: 'Invalid username or password' });
+
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.status(200).json({ token });
+}
+
 module.exports = {
     getUsers,
     getUser,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    register,
+    login
 }
