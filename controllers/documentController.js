@@ -37,12 +37,18 @@ const createDocument = async (req, res) => {
 
 // update a document
 const updateDocument = async (req, res) => {
-    const documentId = req.params.id;
     const {doc_title, doc_year, doc_major, doc_description, doc_link, doc_view, doc_date_upload, doc_download} = req.body
+    const documentId = req.params.id;
 
     try {
         // Use Mongoose to find the document by ID and update it with the data from the request body
-        const updatedDocument = await Document.findByIdAndUpdate(documentId, {doc_title, doc_year, doc_major, doc_description, doc_link, doc_view, doc_date_upload, doc_download}, {new: true});
+        const updatedDocument = await Document.findOneAndUpdate(
+            { _id: documentId },
+            {
+                doc_title, doc_year, doc_major, doc_description, doc_link, doc_view, doc_date_upload, doc_download
+            },
+            { new: true } // return the updated data
+        );
 
         if (!updatedDocument) {
             return res.status(404).json({ error: 'Document not found' });
@@ -50,7 +56,7 @@ const updateDocument = async (req, res) => {
 
         res.status(200).json(updatedDocument);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(400).json({ error: error.message });
     }
 }
 
