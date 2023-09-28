@@ -14,7 +14,9 @@
 ## User
 
 **Description:** The End user, there will be two type of user: Pengguna and Admin.
+
 **Database Route:** `/users`
+
 **Parameters:**
 - `username`: string
 - `user_password`: string
@@ -25,7 +27,9 @@
 ## Document
 
 **Description:** File documents for TETI task, book, pdf, and question.
+
 **Database Route:** `/documents`
+
 **Parameters:**
 - `doc_title`: string
 - `doc_year`: number
@@ -40,16 +44,25 @@
 
 ### Use Case Diagram
 **Description:** Simple diagram for use case made on Figma.
-![Use Case Diagram](https://drive.google.com/file/d/1knK78q4RKZHXw34k-Q23XLhHm_1qExpc/view?usp=sharing)
+![Use Case Diagram](https://www.proxydrive.io/view?id=1knK78q4RKZHXw34k-Q23XLhHm_1qExpc)
+
 
 ### Activity Diagram
+
 **Description:** Simple diagram for activity diagram made on Figma.
-![Activity Diagram - Pengguna](https://drive.google.com/file/d/1Zk6IVgJmLG5FRkTenohDzFgV2m8TVPFP/view?usp=sharing)
-![Activity Diagram - Admin](https://drive.google.com/file/d/1HRfopmZCKo0fx3PzCQT1Jioxfllcbneo/view?usp=sharing)
+
+![Activity Diagram - Pengguna](https://www.proxydrive.io/view?id=1Zk6IVgJmLG5FRkTenohDzFgV2m8TVPFP)
+
+![Activity Diagram - Admin](https://www.proxydrive.io/view?id=1HRfopmZCKo0fx3PzCQT1Jioxfllcbneo)
+
 
 ### Entity Relationship Diagram
+
 **Description:** Simple diagram for ERD made on Figma.
-![ERD](https://drive.google.com/file/d/1EJw0nOB0d0lYQ502YqIXgjZXBI3fb9hp/view?usp=sharing)
+
+![ERD](https://www.proxydrive.io/view?id=1EJw0nOB0d0lYQ502YqIXgjZXBI3fb9hp)
+
 
 ## Related Repositories
+
 **Description:** Frontend repository will be updated after the Backend project finish.
