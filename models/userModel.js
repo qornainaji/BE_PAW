@@ -12,7 +12,7 @@ const usersSchema = new mongoose.Schema({
     },
     user_email: {
         type: String,
-        required: false
+        required: true
     },
     user_NIM: {
         type: String,
@@ -32,6 +32,20 @@ usersSchema.pre('save', async function(next) {
     next();
 });
 
+usersSchema.methods.generateAuthToken = function () {
+    const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET);
+    return token;
+};
+
+const validate = (user) => {
+    const schema = Joi.object({
+        user_name: Joi.string().required(),
+        user_email: Joi.string().email(),
+        user_password: Joi.string().required(),
+    });
+    return schema.validate(user);
+};
+
 const User = mongoose.model('User', usersSchema)
 
-module.exports = User
+module.exports = User;
