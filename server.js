@@ -8,9 +8,13 @@ const documentRoutes = require('./routes/documents')
 const authMiddleware = require('./middleware/authMiddleware')
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const helmet = require('helmet');
 
 // Morgan for monitoring
 app.use(morgan('dev'));
+
+// Helmet for security
+app.use(helmet());
 
 // Body parser
 app.use(express.json())
