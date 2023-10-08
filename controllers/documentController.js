@@ -72,6 +72,18 @@ const deleteDocument = async (req, res) => {
     }
 }
 
+// search documents
+const searchDocuments = async (req, res) => {
+    const {doc_title, doc_year, doc_major, doc_description, doc_link, doc_view, doc_date_upload, doc_download} = req.body
+
+    try {
+        const document = await Document.find({doc_title, doc_year, doc_major, doc_description, doc_link, doc_view, doc_date_upload, doc_download})
+        res.status(200).json(document)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
 
 module.exports = {
     getDocuments,
