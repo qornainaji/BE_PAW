@@ -10,6 +10,14 @@ const usersSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    oauth_provider: {
+        type: String,
+        required: false
+    },
+    oauth_id: {
+        type: String,
+        required: false
+    },
     user_email: {
         type: String,
         required: true
