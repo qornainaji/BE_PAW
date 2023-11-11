@@ -9,6 +9,7 @@ const authMiddleware = require('./middleware/authMiddleware')
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const helmet = require('helmet');
+const cors = require('cors');
 
 // Morgan for monitoring
 app.use(morgan('dev'));
@@ -22,6 +23,10 @@ app.use(express.urlencoded({ extended: true }))
 
 // Use static files
 app.use(express.static('public'))
+
+// Use CORS
+app.use(cors({origin: "*"}))
+
 
 // Routes
 app.use('/users', userRoutes)
