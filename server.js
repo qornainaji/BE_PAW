@@ -36,7 +36,8 @@ app.use('/documents', documentRoutes)
 app.get('/protected', authMiddleware, (req, res) => {
   // If the user is authenticated, the middleware will attach the user data to the request object
   // We can then use it to return a personalized response
-  res.send(`Welcome ${req.user._id}!`)
+  
+  res.sendFile(__dirname + '/public/protected/protected.html')
 })
 
 // Login and register routes
@@ -48,10 +49,15 @@ app.get('/register', (req, res) => {
   res.sendFile(__dirname + '/public/register/register.html')
 })
 
+// Logout route
+app.get('/logout', (req, res) => {
+  res.sendFile(__dirname + '/public/logout/logout.html')
+})
+
 // Home route
 app.get('/', (req, res) => {
   console.log('Server is running')
-  res.send("<h1>Academia TETI</h1><p>Server is running</p>")
+  res.sendFile(__dirname + '/public/index-page/index-page.html')
 })
 
 // Connect to MongoDB

@@ -118,6 +118,12 @@ const login = async (req, res) => {
         .catch(err => console.log(err))
 }
 
+// Logout user
+const logout = (req, res) => {
+    res.cookie('token', '', { maxAge: 0 });
+    res.status(200).json({ message: 'Logout successful' });
+}
+
 module.exports = {
     getUsers,
     getUser,
@@ -125,5 +131,6 @@ module.exports = {
     updateUser,
     deleteUser,
     register,
+    logout,
     login
 }
