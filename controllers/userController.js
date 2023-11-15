@@ -7,8 +7,29 @@ const jwt = require('jsonwebtoken');
 
 // get all user
 const getUsers = async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    const results = {};
+
     try {
         const user = await User.find({}).sort({createdAt: -1})
+        results.results = user.slice(startIndex, endIndex);
+        if (endIndex < user.length) {
+            results.next = {
+                page: page + 1,
+                limit: limit
+            }
+        }
+        if (startIndex > 0) {
+            results.previous = {
+                page: page - 1,
+                limit: limit
+            }
+        }
+        console.log(results)
         res.status(200).json(user)
     } catch (error) {
         res.status(400).json({error: error.message})
