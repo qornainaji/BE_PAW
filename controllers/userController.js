@@ -137,10 +137,13 @@ const login = async (req, res) => {
     }
 }
 
-// Logout user
-const logout = (req, res) => {
-    res.cookie('token', '', { maxAge: 0 });
-    res.status(200).json({ message: 'Logout successful' });
+// GET request for logout
+const logout = async (req, res) => {
+    try {
+        res.clearCookie('token', { domain: 'localhost' }).status(200).json({ message: 'Logout successful' }).redirect('/login');
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 }
 
 module.exports = {

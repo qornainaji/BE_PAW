@@ -49,12 +49,6 @@ app.get('/register', (req, res) => {
   res.sendFile(__dirname + '/public/register/register.html')
 })
 
-// Logout route
-app.get('/logout', (req, res) => {
-  // Redirect to login
-  res.redirect('/login')
-})
-
 // Home route
 app.get('/', (req, res) => {
   console.log('Server is running')

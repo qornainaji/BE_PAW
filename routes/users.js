@@ -12,6 +12,12 @@ const {
 
 const router = express.Router()
 
+router.post('/register', register);
+router.post('/login', login);
+
+// Logout route
+router.get('/logout', logout);
+
 // GET all users
 router.get('/', getUsers)
 
@@ -27,10 +33,6 @@ router.patch('/:id', updateUser)
 // DELETE a user
 router.delete('/:id', deleteUser)
 
-router.post('/register', register);
-router.post('/login', login);
 
-// Logout route
-router.get('/logout', logout);
 
 module.exports = router

@@ -73,7 +73,7 @@ const deleteDocument = async (req, res) => {
 }
 
 // search documents
-const searchDocuments = async (req, res) => {
+const searchDocument = async (req, res) => {
     const {doc_title, doc_year, doc_major, doc_description, doc_link, doc_view, doc_date_upload, doc_download} = req.body
 
     try {
@@ -91,5 +91,6 @@ module.exports = {
     createDocument,
     updateDocument,
     deleteDocument,
+    searchDocument
     // deleteDocuments
 }
