@@ -1,6 +1,7 @@
 const express = require('express')
 const {
     getUsers,
+    getAllUsers,
     getUser,
     createUser,
     updateUser,
@@ -19,7 +20,7 @@ router.post('/login', login);
 router.get('/logout', logout);
 
 // GET all users
-router.get('/', getUsers)
+router.get('/', getUsers, getAllUsers)
 
 // GET a single user
 router.get('/:id', getUser)
