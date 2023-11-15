@@ -140,7 +140,7 @@ const login = async (req, res) => {
 // GET request for logout
 const logout = async (req, res) => {
     try {
-        res.clearCookie('token', { domain: 'localhost' }).status(200).json({ message: 'Logout successful' }).redirect('/login');
+        res.clearCookie('token', { domain: 'localhost' }).redirect('/login');
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
     }

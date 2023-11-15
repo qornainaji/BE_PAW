@@ -43,12 +43,12 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault();
 
         // Send a POST request to the /logout endpoint
-        fetch('/logout', {
-            method: 'POST',
+        fetch('/users/logout', {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                
+
                 // Add any other headers if needed
             },
             // Include any request body if required (typically not needed for a logout)
