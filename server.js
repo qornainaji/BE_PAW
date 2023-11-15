@@ -51,7 +51,8 @@ app.get('/register', (req, res) => {
 
 // Logout route
 app.get('/logout', (req, res) => {
-  res.sendFile(__dirname + '/public/logout/logout.html')
+  // Redirect to login
+  res.redirect('/login')
 })
 
 // Home route

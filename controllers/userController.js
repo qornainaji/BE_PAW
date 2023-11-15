@@ -84,38 +84,57 @@ const deleteUser = async (req, res) => {
 // register user
 const register = async (req, res) => {
     const { user_name, user_password, user_email, user_NIM, user_isAdmin } = req.body;
-    const user = new User({ user_name, user_password, user_email, user_NIM, user_isAdmin });
-    await user.save();
+    
+    try {
+        // Check if the user already exists
+        const userExists = await User.findOne({ user_name });
+        if (userExists) {
+            return res.status(400).json({ message: 'Username already exists' });
+        }
 
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.status(200).json({ token });
+        // Create a new user with hashed password
+        const user = new User({ user_name, user_password: user_password, user_email, user_NIM, user_isAdmin });
+        await user.save();
+
+        // redirect to login
+        res.redirect('/login');
+        // res.status(201).json({ message: 'User created successfully' });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 }
 
 // login user
 const login = async (req, res) => {
     const { user_name, user_password } = req.body;
 
-    // encrypt user_password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(user_password, salt);
+    try {
+        const user = await User.findOne({ user_name });
 
-    User.findOne({ user_name })
-        .then(user => {
-            if (!user) console.log('user not found')
-            if (!user) return res.status(400).json({ message: 'Invalid username or password' });
+        if (!user) {
+            return res.status(400).json({ message: 'No username found!' });
+        }
 
-            console.log("User Input: " + user_password + "\n" +"Stored Password: " + user.user_password);
+        console.log("User Password: " + user_password)
+        console.log("Manually hashed password: " + bcrypt.hashSync(user_password, 10))
+        console.log("User user_password: " + user.user_password)
 
-            if (user_password != user.user_password) console.log('password not match')
-            if (user_password != user.user_password) return res.status(400).json({ message: 'Invalid username or password' });
+        // Compare the provided password with the hashed password from the database
+        const passwordMatch = await bcrypt.compare(user_password, user.user_password);
+        console.log("Password Match: " + passwordMatch)
 
-            const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-            console.log("JWT Secret: " + process.env.JWT_SECRET + "\nJWT Token: " + token);
-            // Set cookie
-            res.cookie('token', token, { httpOnly: true, maxAge: 3600000, domain: 'localhost' });
-            res.status(200).json({ token });
-        })
-        .catch(err => console.log(err))
+        if (!passwordMatch) {
+            return res.status(400).json({ message: 'Invalid password.' + user_password + " " + user.user_password });
+        }
+
+        // Password is correct, generate and send a JWT token
+        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        res.cookie('token', token, { httpOnly: true, maxAge: 3600000, domain: 'localhost' });
+        res.status(200).json({ token });
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 }
 
 // Logout user

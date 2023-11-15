@@ -22,6 +22,7 @@ function sendLoginInfo() {
 
     alert(userData);
 
+
     // Send a POST request using Fetch
     fetch("/users/login", {
         method: "POST",
