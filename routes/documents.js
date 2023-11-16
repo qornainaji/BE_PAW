@@ -5,13 +5,14 @@ const {
     createDocument,
     updateDocument,
     deleteDocument,
+    getAllDocuments,
     // deleteDocuments
 } = require('../controllers/documentController')
 
 const router = express.Router()
 
 // GET all documents
-router.get('/', getDocuments)
+router.get('/', getDocuments, getAllDocuments)
 
 // GET a single document
 router.get('/:id', getDocument)
