@@ -31,11 +31,11 @@ const getUser = async (req, res) => {
 
 // create new user
 const createUser = async (req, res) => {
-    const {user_name, user_password, user_email, user_NIM, user_isAdmin} = req.body
+    const {user_name, user_username, user_password, user_email, user_NIM, user_isAdmin} = req.body
 
     // add to database
     try {
-        const user = await User.create({user_name, user_password, user_email, user_NIM, user_isAdmin})
+        const user = await User.create({user_name, user_username, user_password, user_email, user_NIM, user_isAdmin})
         res.status(200).json(user)
     } catch (error) {
         res.status(400).json({error: error.message})
@@ -44,13 +44,13 @@ const createUser = async (req, res) => {
 
 // update user
 const updateUser = async (req, res) => {
-    const { user_name, user_password, user_email, user_NIM, user_isAdmin } = req.body;
+    const { user_name, user_username, user_password, user_email, user_NIM, user_isAdmin } = req.body;
     const userId = req.params.id;
     try {
         const user = await User.findOneAndUpdate(
             { _id: userId },
             {
-                user_name, user_password, user_email, user_NIM, user_isAdmin
+                user_name, user_username, user_password, user_email, user_NIM, user_isAdmin
             },
             { new: true } // return the updated data
         );
@@ -81,21 +81,25 @@ const deleteUser = async (req, res) => {
 
 // register user
 const register = async (req, res) => {
-    const { user_name, user_password, user_email, user_NIM, user_isAdmin } = req.body;
+    const { user_name, user_username, user_password, user_email, user_NIM, user_isAdmin } = req.body;
     
     try {
         // Check if the user already exists
         const userExists = await User.findOne({ user_name });
         if (userExists) {
+            console.log("User exists")
             return res.status(400).json({ message: 'Username already exists' });
         }
 
         // Create a new user with hashed password
-        const user = new User({ user_name, user_password: user_password, user_email, user_NIM, user_isAdmin });
+        const user = new User({ user_name, user_username, user_password: user_password, user_email, user_NIM, user_isAdmin });
         await user.save();
 
+        // Send a message through the response
+        res.status(201).json({ message: 'User created successfully' });
+
         // redirect to login
-        res.redirect('/login');
+        // res.redirect('/login');
         // res.status(201).json({ message: 'User created successfully' });
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -104,18 +108,14 @@ const register = async (req, res) => {
 
 // login user
 const login = async (req, res) => {
-    const { user_name, user_password } = req.body;
+    const { user_username, user_password } = req.body;
 
     try {
-        const user = await User.findOne({ user_name });
+        const user = await User.findOne({ user_username });
 
         if (!user) {
             return res.status(400).json({ message: 'No username found!' });
         }
-
-        console.log("User Password: " + user_password)
-        console.log("Manually hashed password: " + bcrypt.hashSync(user_password, 10))
-        console.log("User user_password: " + user.user_password)
 
         // Compare the provided password with the hashed password from the database
         const passwordMatch = await bcrypt.compare(user_password, user.user_password);
