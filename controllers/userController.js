@@ -5,6 +5,7 @@ const User = require('../models/userModel')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const paginatedResults = require('../middleware/paginationMiddleware,js');
+const Joi = require('joi');
 
 // get all user
 const getUsers = paginatedResults(User)
@@ -122,13 +123,15 @@ const login = async (req, res) => {
         console.log("Password Match: " + passwordMatch)
 
         if (!passwordMatch) {
-            return res.status(400).json({ message: 'Invalid password.' + user_password + " " + user.user_password });
+            return res.status(401).json({ message: 'Invalid password.' + user_password + " " + user.user_password });
         }
 
         // Password is correct, generate and send a JWT token
         const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.cookie('token', token, { httpOnly: true, maxAge: 3600000, domain: 'localhost' });
-        res.status(200).json({ token });
+        res.cookie('token', token, { httpOnly: true, maxAge: 3600000, domain: 'localhost', secure: true });
+        console.log("Token: " + token)
+
+        res.status(200).json({ message: 'Login successful', token: token, user: user });
     } catch (error) {
         console.error('Login error:', error);
         res.status(500).json({ error: 'Internal Server Error' });

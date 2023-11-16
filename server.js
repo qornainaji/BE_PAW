@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
 // Use CORS
-app.use(cors({origin: "*"}))
+app.use(cors({origin: "*", methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'], credentials: true}))
 
 
 // Routes

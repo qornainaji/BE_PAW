@@ -1,14 +1,12 @@
 const mongoose = require('mongoose')
 const Document = require('../models/documentModel')
+const paginatedResults = require('../middleware/paginationMiddleware,js');
 
 // get all documents
-const getDocuments = async (req, res) => {
-    try {
-        const document = await Document.find({}).sort({createdAt: -1})
-        res.status(200).json(document)
-    } catch (error) {
-        res.status(400).json({error: error.message})
-    }
+const getDocuments = paginatedResults(Document)
+
+const getAllDocuments = async (req, res) => {
+    res.json(res.paginatedResults)
 }
 
 // get a single document
@@ -86,6 +84,7 @@ const searchDocument = async (req, res) => {
 
 
 module.exports = {
+    getAllDocuments,
     getDocuments,
     getDocument,
     createDocument,
