@@ -147,6 +147,17 @@ const logout = async (req, res) => {
     }
 }
 
+// GET request to check if user is admin
+const checkAdmin = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const user = await User.findOne({ _id: userId });
+        res.status(200).json({ isAdmin: user.user_isAdmin });
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
 module.exports = {
     getUsers,
     getAllUsers,
@@ -156,5 +167,6 @@ module.exports = {
     deleteUser,
     register,
     logout,
-    login
+    login,
+    checkAdmin
 }

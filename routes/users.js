@@ -8,13 +8,17 @@ const {
     deleteUser,
     register,
     logout,
-    login
+    login,
+    checkAdmin
 } = require('../controllers/userController')
 
 const router = express.Router()
 
 router.post('/register', register);
 router.post('/login', login);
+
+// Get admin status of a user
+router.get('/admin/:id', checkAdmin)
 
 // Logout route
 router.get('/logout', logout);
