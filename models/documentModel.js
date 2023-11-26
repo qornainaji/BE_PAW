@@ -23,15 +23,15 @@ const documentSchema = new mongoose.Schema({
     },
     doc_view: {
         type: Number,
-        required: true
+        required: false
     },
     doc_date_upload: {
         type: Date,
-        required: true
+        required: false
     },
     doc_download: {
         type: Number,
-        required: true
+        required: false
     },
 }, { timestamps: true })
 
