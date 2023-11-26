@@ -10,6 +10,8 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
+const httpProxy = require('http-proxy');
+const proxy = httpProxy.createProxyServer({});
 
 // Morgan for monitoring
 app.use(morgan('dev'));
@@ -25,8 +27,22 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
 // Use CORS
-// app.use(cors({origin: "*", methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'], credentials: true}))
-app.use(cors({origin: "http://localhost:3000", methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'], credentials: true}))
+app.use(cors({origin: "*", methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'], credentials: true}))
+// app.use(cors({origin: "http://localhost:3000", methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'], credentials: true}))
+
+
+app.use(cors());
+
+app.all('/documents/*', (req, res) => {
+  proxy.web(req, res, {
+    target: 'https://plain-toad-sweater.cyclic.app',
+    changeOrigin: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      // Add any other necessary headers here
+    },
+  });
+});
 
 // Routes
 app.use('/users', userRoutes)
