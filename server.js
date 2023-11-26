@@ -26,7 +26,7 @@ app.use(express.static('public'))
 
 // Use CORS
 // app.use(cors({origin: "*", methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'], credentials: true}))
-app.use(cors({origin: "https://plain-toad-sweater.cyclic.app", methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'], credentials: true}))
+app.use(cors({origin: "http://localhost:3000", methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'], credentials: true}))
 
 // Routes
 app.use('/users', userRoutes)
