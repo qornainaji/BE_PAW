@@ -1,6 +1,33 @@
 const mongoose = require('mongoose')
 const Document = require('../models/documentModel')
 const paginatedResults = require('../middleware/paginationMiddleware,js');
+const { appengine } = require('googleapis/build/src/apis/appengine');
+
+// upload file to google drive
+const KEYFILEPATH = path.join(__dirname, '../cred.json');
+const SCOPES = ['https://www.googleapis.com/auth/drive'];
+const auth = new google.auth.GoogleAuth({
+    keyFile: KEYFILEPATH,
+    scopes: SCOPES
+});
+
+const uploadFile = async (fileObject) => {
+    const bufferStream = new stream.PassThrough();
+    bufferStream.end(fileObject.buffer);
+    const { data } = await google.drive({ version: 'v3', auth }).files.create({
+    media : {
+        mimeType: fileObject.mimetype,
+        body: bufferStream
+    },
+    requestBody: {
+        name: fileObject.originalname,
+        parents: ["1_ZJ-U0U6duqAT5CQBmiZFP0mrasTCNBz"],
+    },
+    fields: "id,name"
+    });
+    console.log(`Uploaded File ${data.name} ${data.id}`);
+};    
+
 
 // get all documents
 const getDocuments = paginatedResults(Document)
