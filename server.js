@@ -31,18 +31,18 @@ app.use(cors({origin: "*", methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'], c
 // app.use(cors({origin: "http://localhost:3000", methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'], credentials: true}))
 
 
-app.use(cors());
+// app.use(cors());
 
-app.all('/documents/*', (req, res) => {
-  proxy.web(req, res, {
-    target: 'https://plain-toad-sweater.cyclic.app',
-    changeOrigin: true,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      // Add any other necessary headers here
-    },
-  });
-});
+// app.all('/documents/*', (req, res) => {
+//   proxy.web(req, res, {
+//     target: 'https://plain-toad-sweater.cyclic.app',
+//     changeOrigin: true,
+//     headers: {
+//       'Access-Control-Allow-Origin': '*',
+//       // Add any other necessary headers here
+//     },
+//   });
+// });
 
 // Routes
 app.use('/users', userRoutes)
