@@ -22,7 +22,7 @@ const getDocument = async (req, res) => {
 
 // create a new document
 const createDocument = async (req, res) => {
-    const {doc_title, doc_year, doc_major, doc_description} = req.body
+    const {doc_title, doc_year, doc_major, doc_description, doc_link} = req.body
 
     // add to database
     try {
