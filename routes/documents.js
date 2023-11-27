@@ -4,8 +4,8 @@ const stream = require('stream');
 const path = require('path');
 const { google } = require('googleapis');
 
-const storage = multer.memoryStorage(); // store files in memory as buffer
-const upload = multer({ storage: storage }); // use memory storage for multer
+// const storage = multer.memoryStorage(); // store files in memory as buffer
+// const upload = multer({ storage: storage }); // use memory storage for multer
 
 const {
     getDocuments,
@@ -26,8 +26,11 @@ router.get('/', getDocuments, getAllDocuments)
 router.get('/:id', getDocument)
 
 // POST a new document
-router.post('/', upload.single('pdf'), createDocument)
-// router.post('/', createDocument)
+// router.post('/', upload.single('pdf'), createDocument)
+router.post('/', createDocument)
+
+// POST a new file to Google Drive
+// router.post()
 
 // UPDATE a document
 router.patch('/:id', updateDocument)

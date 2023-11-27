@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const Document = require('../models/documentModel')
 const paginatedResults = require('../middleware/paginationMiddleware,js');
 const { appengine } = require('googleapis/build/src/apis/appengine');
+const path = require('path');
 
 // upload file to google drive
 const KEYFILEPATH = path.join(__dirname, '../cred.json');
@@ -10,6 +11,19 @@ const auth = new google.auth.GoogleAuth({
     keyFile: KEYFILEPATH,
     scopes: SCOPES
 });
+
+const getFilePDF = async (req, res) => {
+    try {
+        console.log(req.body);
+        console.log(req.file);
+        const {body, files} = req;
+        await uploadFile(files[0]);
+        res.status(200).send('File uploaded successfully');
+
+    } catch (error) {
+     res.send(error.message)
+    }
+}
 
 const uploadFile = async (fileObject) => {
     const bufferStream = new stream.PassThrough();
