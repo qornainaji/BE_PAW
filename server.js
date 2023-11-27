@@ -10,8 +10,8 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
-const httpProxy = require('http-proxy');
-const proxy = httpProxy.createProxyServer({});
+// const httpProxy = require('http-proxy');
+// const proxy = httpProxy.createProxyServer({});
 
 // Morgan for monitoring
 app.use(morgan('dev'));
