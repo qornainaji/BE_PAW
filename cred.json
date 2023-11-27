@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "paw-academia-dteti",
+  "private_key_id": "1aace24ad5d485ce72e5bbaab7edad24e20d924c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQC95E8GeH8ky1jJ\nRGXezeGHipzplx3tyhwqY1Blo/oMnRw9kQzB7W24DcmK0UsaQol2e0Blrm9aDe43\nY4lyQS0fScnDODwYzsBKM2oq/qJiU8A+FENGpnVLiZ/wXtKo/J6nsay4PKzt+KhV\nDQcy1mxfYKlkIyfq1hp1goU2lAJ2xNCMIcCSR4zishoPM84CQftz29B/D64zbuk3\nJO2r2z680NvD6F1cZiPbKY6WhaEDyVxNDAF5U+cH+MthppM0k1SR9HdTmRocN/cY\nt4iS+NZg+a1nWfTtEGkiBPdncSK1zuWkHak+kk5CrCsbOlE2Pwu6IYYSINtv3cGH\nSU11vEhFAgMBAAECgf9Wag+MYkl59Q/yh63UNtzrUakWpC56h/9JSujLWFPyaYzw\nd5HWrrW/jIarJZOH37+uq2gi3b7OvIgrrKBf3kkqc+ndbTnsECpxmfQ2nKpJFNPn\nbFExVY8LURX3zS8Qt+V7at+u9+26Xe48xjEAcZPf051CdL01oTlpQHxe2fxFD4Mn\nhghOwgOMfqY5skB/mMAj22qIsv1ZIwCt0cVJKyZcapLRsEeHagVtpBn60MouVYW8\nK2CMVxkIS7yWGnwnMitZN4U2xhGyqc6YOfRflvgn8tW6aIOJDD4AJZDV1xe3zTD4\nW6RcKVt5TrF7nI5oSnZEpqxBzNHNkeFHVDau5kECgYEA32WbSpmq1wHzhIZvAOmA\n6zRLK9/xwLcLiCHWC6j5J7eChd5tXH9VsCDwLIIyYEQEcCWzzIUMjL3/fbQqt5JF\nYvWbMUEN754z5W9GWfU1SatNDGAvZbj1kViUsNLuAo6HVFB+Vi9SOnZSt7kEObJc\ncjDUq7/jl2LaG4iyipt/SSECgYEA2Zro7zNN/tFX9+9Jy5Hx9VvlHtFnfVApeajt\nNUg8U2KNGyW6gyHbmodTr9KVrqC7r5KYyM1YnH3Y2XkY0S6Kw1344AtOHV69vZfK\nEdSaJOQAJq68KAxqcGbMa/nM5cs4YpVv1VPNVWxmRJmTZXtubFwBK9PyYpaYq9Iu\nZoivZqUCgYA8sFG7tnte5bzOJ+dIDCdlvlMdnD0E6bVMSkTn7gOh8oyW6ZI0KrOQ\noaIdtVESLeg2v0dVLF/4bDVYZPWl4SrQc4CxpMawbf4TOmOWVLMhTFQmJIs7yz+L\nONFMKEFYmHfTQ/rOVxSzpSlbl/u54OaUbweXkQ23Nreh+0TlutCdgQKBgAoTxXPG\nYXdKhJNjznwR7y2Yqtypf+xquPD8ZLfR95E5ACXgsml+OOhIGhULYIkswmRYGqE5\n+T+OCGvR0tdlG2H+yRa/D0gG6iyMifwXZ2gL8wHXl7kXEhrQd+kMMXP23E6ccwhj\nECBDm9zTa+MIO03jWN6JuzDbnohefG2dKNpNAoGBANy8E+w7n+CuvSZZlLxgXuX/\nDe2D8bzq4McS5md5Z0+vIQeYFZxyb+w9HczXISFnhE2JQeZLApPEkc1wLWrzqu5b\nnwydmYZeIZllCpo04T76WAjcn7C0s0F4pWABBQvVGEMEpHAFaNWgjW4+He6q/Ee2\nGr6iFOpTAHVzjIlYzxRn\n-----END PRIVATE KEY-----\n",
+  "client_email": "drive-paw-academia-dteti@paw-academia-dteti.iam.gserviceaccount.com",
+  "client_id": "117703638841232747120",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/drive-paw-academia-dteti%40paw-academia-dteti.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

@@ -21,39 +21,39 @@ const getDocument = async (req, res) => {
 }
 
 // create a new document
-// const createDocument = async (req, res) => {
-//     const {doc_title, doc_year, doc_major, doc_description, doc_link} = req.body
-
-//     // add to database
-//     try {
-//         const document = await Document.create({doc_title, doc_year, doc_major, doc_description, doc_link})
-//         res.status(200).json(document)
-//     } catch (error) {
-//         res.status(400).json({error: error.message})
-//     }
-// }
-
 const createDocument = async (req, res) => {
-    const {doc_title, doc_year, doc_major, doc_description, doc_view, doc_date_upload, doc_download} = req.body
+    const {doc_title, doc_year, doc_major, doc_description, doc_link} = req.body
 
     // add to database
     try {
-        const document = await Document({
-            doc_title, 
-            doc_year, 
-            doc_major, 
-            doc_description, 
-            doc_link: req.file.buffer.toString('base64'), 
-            // doc_view, 
-            // doc_date_upload, 
-            // doc_download
-        });
-        await document.save();
+        const document = await Document.create({doc_title, doc_year, doc_major, doc_description, doc_link})
         res.status(200).json(document)
     } catch (error) {
         res.status(400).json({error: error.message})
     }
-};
+}
+
+// const createDocument = async (req, res) => {
+//     const {doc_title, doc_year, doc_major, doc_description, doc_view, doc_date_upload, doc_download} = req.body
+
+//     // add to database
+//     try {
+//         const document = await Document({
+//             doc_title, 
+//             doc_year, 
+//             doc_major, 
+//             doc_description, 
+//             doc_link: req.file.buffer.toString('base64'), 
+//             // doc_view, 
+//             // doc_date_upload, 
+//             // doc_download
+//         });
+//         await document.save();
+//         res.status(200).json(document)
+//     } catch (error) {
+//         res.status(400).json({error: error.message})
+//     }
+// };
 
 // update a document
 const updateDocument = async (req, res) => {
