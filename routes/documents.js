@@ -23,8 +23,8 @@ router.get('/', getDocuments, getAllDocuments)
 router.get('/:id', getDocument)
 
 // POST a new document
-// router.post('/', upload.single('pdf'), createDocument)
-router.post('/', createDocument)
+router.post('/', upload.single('pdf'), createDocument)
+// router.post('/', createDocument)
 
 // UPDATE a document
 router.patch('/:id', updateDocument)
