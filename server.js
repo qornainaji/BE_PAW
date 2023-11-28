@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const app = express()
 const userRoutes = require('./routes/users')
 const documentRoutes = require('./routes/documents')
+const uploadRoutes = require('./routes/upload')
 const authMiddleware = require('./middleware/authMiddleware')
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
@@ -47,6 +48,8 @@ app.use(cors({origin: "*", methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'], c
 // Routes
 app.use('/users', userRoutes)
 app.use('/documents', documentRoutes)
+app.use('/upload', uploadRoutes)
+
 
 // Protected route, authMiddleware will check for a valid JWT
 app.get('/protected', authMiddleware, (req, res) => {
