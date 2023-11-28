@@ -31,7 +31,7 @@ router.get('/:id', getDocument)
 router.post('/', createDocument)
 
 // POST a new file to Google Drive
-router.post('/upload/', getFilePDF)
+router.post('/file', getFilePDF)
 
 // UPDATE a document
 router.patch('/:id', updateDocument)
