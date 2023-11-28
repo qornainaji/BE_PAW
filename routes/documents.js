@@ -1,6 +1,6 @@
 const express = require('express')
 const multer = require('multer');
-const upload = require('multer');
+const upload = multer();
 const stream = require('stream');
 const path = require('path');
 const { google } = require('googleapis');
