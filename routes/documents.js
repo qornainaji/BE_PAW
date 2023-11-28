@@ -1,5 +1,6 @@
 const express = require('express')
 const multer = require('multer');
+const upload = require('multer');
 const stream = require('stream');
 const path = require('path');
 const { google } = require('googleapis');
@@ -21,7 +22,7 @@ const {
 const router = express.Router()
 
 // GET all documents
-router.get('/', getDocuments, getAllDocuments, getFilePDF)
+router.get('/', getDocuments, getAllDocuments)
 
 // GET a single document
 router.get('/:id', getDocument)
@@ -31,7 +32,7 @@ router.get('/:id', getDocument)
 router.post('/', createDocument)
 
 // POST a new file to Google Drive
-// router.post('/file', getFilePDF)
+router.post('/upload', upload.any(), getFilePDF)
 
 // UPDATE a document
 router.patch('/:id', updateDocument)
