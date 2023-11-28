@@ -150,6 +150,7 @@ const searchDocument = async (req, res) => {
 module.exports = {
     getAllDocuments,
     getDocuments,
+    getFilePDF,
     getDocument,
     createDocument,
     updateDocument,

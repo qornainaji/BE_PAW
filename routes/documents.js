@@ -14,6 +14,7 @@ const {
     updateDocument,
     deleteDocument,
     getAllDocuments,
+    getFilePDF
     // deleteDocuments
 } = require('../controllers/documentController')
 
@@ -30,7 +31,7 @@ router.get('/:id', getDocument)
 router.post('/', createDocument)
 
 // POST a new file to Google Drive
-// router.post()
+router.post(/upload/, getFilePDF)
 
 // UPDATE a document
 router.patch('/:id', updateDocument)
