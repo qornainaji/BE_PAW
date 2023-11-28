@@ -33,6 +33,10 @@ const usersSchema = new mongoose.Schema({
     user_isAdmin: {
         type: Boolean,
         required: false
+    },
+    user_isVerified: {
+        type: Boolean,
+        required: true
     }
 }, { timestamps: true })
 

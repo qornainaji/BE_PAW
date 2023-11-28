@@ -36,7 +36,7 @@ const createUser = async (req, res) => {
 
     // add to database
     try {
-        const user = await User.create({user_name, user_username, user_password, user_email, user_NIM, user_isAdmin})
+        const user = await User.create({user_name, user_username, user_password, user_email, user_NIM, user_isAdmin, user_isVerified})
         res.status(200).json(user)
     } catch (error) {
         res.status(400).json({error: error.message})
@@ -51,7 +51,7 @@ const updateUser = async (req, res) => {
         const user = await User.findOneAndUpdate(
             { _id: userId },
             {
-                user_name, user_username, user_password, user_email, user_NIM, user_isAdmin
+                user_name, user_username, user_password, user_email, user_NIM, user_isAdmin, user_isVerified
             },
             { new: true } // return the updated data
         );
@@ -82,7 +82,7 @@ const deleteUser = async (req, res) => {
 
 // register user
 const register = async (req, res) => {
-    const { user_name, user_username, user_password, user_email, user_NIM, user_isAdmin } = req.body;
+    const { user_name, user_username, user_password, user_email, user_NIM, user_isAdmin, user_isVerified } = req.body;
     
     try {
         // Check if the user already exists
@@ -93,7 +93,7 @@ const register = async (req, res) => {
         }
 
         // Create a new user with hashed password
-        const user = new User({ user_name, user_username, user_password: user_password, user_email, user_NIM, user_isAdmin });
+        const user = new User({ user_name, user_username, user_password: user_password, user_email, user_NIM, user_isAdmin, user_isVerified });
         await user.save();
 
         // Send a message through the response
