@@ -1,5 +1,5 @@
 // const { appengine } = require('googleapis/build/src/apis/appengine');
-const stream = require("stream");
+const { PassThrough } = require("stream");
 const { google } = require('googleapis');
 const path = require('path');
 
@@ -11,21 +11,8 @@ const auth = new google.auth.GoogleAuth({
     scopes: SCOPES
 });
 
-const getFilePDF = async (req, res) => {
-    try {
-        console.log(req.body);
-        console.log(req.file);
-        const {body, files} = req;
-        await uploadFile(files[0]);
-        res.status(200).send('File uploaded successfully');
-
-    } catch (error) {
-     res.send(error.message)
-    }
-}
-
 const uploadFile = async (fileObject) => {
-    const bufferStream = new stream.PassThrough();
+    const bufferStream = new PassThrough();
     bufferStream.end(fileObject.buffer);
     const { data } = await google.drive({ version: 'v3', auth }).files.create({
     media : {
@@ -39,7 +26,26 @@ const uploadFile = async (fileObject) => {
     fields: "id,name"
     });
     console.log(`Uploaded File ${data.name} ${data.id}`);
-};    
+};   
+
+
+const getFilePDF = async (req, res) => {
+    try {
+        console.log(req.body);
+        console.log(req.file);
+        const { files } = req;
+        if (!files || !files[0]) {
+            throw new Error('No file found in request');
+        }
+        await uploadFile(files[0]);
+        res.status(200).send('File uploaded successfully');
+
+    } catch (error) {
+     res.status(500).send(error.message)
+    }
+}
+
+
 
 module.exports = {
     getFilePDF,
