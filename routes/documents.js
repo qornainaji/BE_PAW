@@ -21,7 +21,7 @@ const {
 const router = express.Router()
 
 // GET all documents
-router.get('/', getDocuments, getAllDocuments)
+router.get('/', getDocuments, getAllDocuments, getFilePDF)
 
 // GET a single document
 router.get('/:id', getDocument)
@@ -31,7 +31,7 @@ router.get('/:id', getDocument)
 router.post('/', createDocument)
 
 // POST a new file to Google Drive
-router.post('/file', getFilePDF)
+// router.post('/file', getFilePDF)
 
 // UPDATE a document
 router.patch('/:id', updateDocument)
