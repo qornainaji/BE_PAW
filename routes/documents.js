@@ -31,7 +31,7 @@ router.get('/:id', getDocument)
 // POST a new document
 // router.post('/', upload.single('pdf'), createDocument)
 // router.post('/', createDocument)
-router.post('/', upload.single('doc_link'), createDocument)
+router.post('/', upload.any(), createDocument)
 
 
 // UPDATE a document
