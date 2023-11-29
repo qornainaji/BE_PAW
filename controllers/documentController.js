@@ -82,9 +82,9 @@ const createDocument = async (req, res) => {
     
     try {
         
-        if (!files || !files[0]) {
-            throw new Error('No file found in request');
-        }
+        // if (!files || !files[0]) {
+        //     throw new Error('No file found in request');
+        // }
         await uploadFile(doc_link);
         res.status(200).send('File uploaded successfully');
 
