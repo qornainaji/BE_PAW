@@ -78,14 +78,14 @@ const createDocument = async (req, res) => {
     // } catch (error) {
     //     res.status(400).json({error: error.message})
     // }
+    const {doc_link} = req.body
+    
     try {
-        console.log(req.body);
-        console.log(req.file);
-        const { files } = req;
+        
         if (!files || !files[0]) {
             throw new Error('No file found in request');
         }
-        await uploadFile(files[0]);
+        await uploadFile(doc_link);
         res.status(200).send('File uploaded successfully');
 
     } catch (error) {
