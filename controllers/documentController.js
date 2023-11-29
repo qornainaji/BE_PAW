@@ -26,9 +26,9 @@ const uploadFile = async (fileObject) => {
         name: fileObject.originalname,
         parents: ["1_ZJ-U0U6duqAT5CQBmiZFP0mrasTCNBz"],
     },
-    fields: "id,name"
+    fields: "id,name,webViewLink"
     });
-    console.log(`Uploaded File ${data.name} ${data.id}`);
+    console.log(`Uploaded File ${data.name} ${data.id} ${data.webViewLink}`);
 };   
 
 
@@ -78,19 +78,21 @@ const createDocument = async (req, res) => {
     // } catch (error) {
     //     res.status(400).json({error: error.message})
     // }
-    const {doc_link} = req.body
-    
+
     try {
-        
-        // if (!files || !files[0]) {
-        //     throw new Error('No file found in request');
-        // }
-        await uploadFile(doc_link);
+        console.log(req.body);
+        console.log(req.file);
+        const { files } = req;
+        if (!files || !files[0]) {
+            throw new Error('No file found in request');
+        }
+        await uploadFile(files[0]);
         res.status(200).send('File uploaded successfully');
 
     } catch (error) {
-     res.status(500).send(error.message)
+        res.status(500).send(error.message)
     }
+    
 }
 
 // const createDocument = async (req, res) => {
