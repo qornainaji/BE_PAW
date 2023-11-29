@@ -48,7 +48,7 @@ app.use(cors({origin: "*", methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'], c
 // Routes
 app.use('/users', userRoutes)
 app.use('/documents', documentRoutes)
-app.use('/upload', uploadRoutes)
+// app.use('/upload', uploadRoutes)
 
 
 // Protected route, authMiddleware will check for a valid JWT

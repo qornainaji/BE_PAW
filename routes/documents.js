@@ -5,6 +5,7 @@ const stream = require('stream');
 const path = require('path');
 const { google } = require('googleapis');
 
+
 // const storage = multer.memoryStorage(); // store files in memory as buffer
 // const upload = multer({ storage: storage }); // use memory storage for multer
 
@@ -15,7 +16,7 @@ const {
     updateDocument,
     deleteDocument,
     getAllDocuments,
-    getFilePDF
+    // getFilePDF
     // deleteDocuments
 } = require('../controllers/documentController')
 
@@ -29,7 +30,8 @@ router.get('/:id', getDocument)
 
 // POST a new document
 // router.post('/', upload.single('pdf'), createDocument)
-router.post('/', createDocument)
+// router.post('/', createDocument)
+router.post('/', upload.any(), createDocument)
 
 
 // UPDATE a document
