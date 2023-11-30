@@ -98,9 +98,7 @@ const createDocument = async (req, res) => {
         if (!files || !files[0]) {
             throw new Error('No file found in request');
         }
-        console.log(files);
-        console.log(body);
-        console.log(req.body);
+        console.log(uploadFile.webViewLink);
 
         await uploadFile(files[0]);
         
