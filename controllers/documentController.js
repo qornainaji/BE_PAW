@@ -79,20 +79,40 @@ const createDocument = async (req, res) => {
     //     res.status(400).json({error: error.message})
     // }
 
+    // try {
+    //     console.log(req.body);
+    //     console.log(req.file);
+    //     const { files } = req;
+    //     if (!files || !files[0]) {
+    //         throw new Error('No file found in request');
+    //     }
+    //     await uploadFile(files[0]);
+    //     res.status(200).send('File uploaded successfully');
+
+    // } catch (error) {
+    //     res.status(500).send(error.message)
+    // }
+
     try {
-        console.log(req.body);
-        console.log(req.file);
-        const { files } = req;
+        const {files, body} = req;
         if (!files || !files[0]) {
             throw new Error('No file found in request');
         }
-        await uploadFile(files[0]);
-        res.status(200).send('File uploaded successfully');
 
-    } catch (error) {
-        res.status(500).send(error.message)
+        await uploadFile(files[0]);
+        
+        const {doc_title, doc_year, doc_major, doc_description} = body;
+        const document = await Document.create({
+            doc_title, 
+            doc_year, 
+            doc_major, 
+            doc_description, 
+            doc_link: uploadFile.webViewLink,
+        });
+        res.status(200).json({ message: 'Document and file uploaded successfully', document });
     }
-    
+    catch (error) {}
+        res.status(500).json({error:error.message})
 }
 
 // const createDocument = async (req, res) => {
