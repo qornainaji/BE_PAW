@@ -111,8 +111,10 @@ const createDocument = async (req, res) => {
         });
         res.status(200).json({ message: 'Document and file uploaded successfully', document });
     }
-    catch (error) {}
-        res.status(500).json({error:error.message});
+    catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+        
 }
 
 // const createDocument = async (req, res) => {
