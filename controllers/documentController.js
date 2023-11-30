@@ -110,7 +110,7 @@ const createDocument = async (req, res) => {
             doc_year,
             doc_major,
             doc_description,
-            doc_link: webViewLink, // Use the webViewLink obtained from Google Drive
+            doc_link: uploadFile.webViewLink, // Use the webViewLink obtained from Google Drive
             // Add other fields as needed
         });
         res.status(200).json({ message: 'Document and file uploaded successfully', document });
