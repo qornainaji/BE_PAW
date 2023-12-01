@@ -29,6 +29,7 @@ const uploadFile = async (fileObject) => {
     fields: "id,name,webViewLink"
     });
     console.log(`Uploaded File ${data.name} ${data.id} ${data.webViewLink}`);
+    return data.webViewLink;
 };   
 
 
@@ -98,18 +99,20 @@ const createDocument = async (req, res) => {
         if (!files || !files[0]) {
             throw new Error('No file found in request');
         }
-        console.log(uploadFile.webViewLink);
 
-        await uploadFile(files[0]);
+        const webViewLink = await uploadFile(files[0]);
+        console.log(webViewLink);
         
-        const {doc_title, doc_year, doc_major, doc_description} = body;
-        const document = await Document({
+        const {doc_title, doc_year, doc_major, doc_description, doc_view, doc_date_upload, doc_download} = body;
+        const document = await Document.create({
             doc_title,
             doc_year,
             doc_major,
             doc_description,
-            doc_link: uploadFile.webViewLink, // Use the webViewLink obtained from Google Drive
-            // Add other fields as needed
+            doc_link: webViewLink, // Use the webViewLink obtained from Google Drive
+            doc_view,
+            doc_date_upload,
+            doc_download
         });
         res.status(200).json({ message: 'Document and file uploaded successfully', document });
     }
