@@ -14,11 +14,7 @@ const usersSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    oauth_provider: {
-        type: String,
-        required: false
-    },
-    oauth_id: {
+    github_id: {
         type: String,
         required: false
     },
@@ -37,6 +33,34 @@ const usersSchema = new mongoose.Schema({
     user_isVerified: {
         type: Boolean,
         required: true
+    },
+    user_avatarURL: {
+        type: String,
+        required: false
+    },
+    user_bio: {
+        type: String,
+        required: false
+    },
+    user_location: {
+        type: String,
+        required: false
+    },
+    user_website: {
+        type: String,
+        required: false
+    },
+    user_linkedin: {
+        type: String,
+        required: false
+    },
+    user_github: {
+        type: String,
+        required: false
+    },
+    user_twitter: {
+        type: String,
+        required: false
     }
 }, { timestamps: true })
 

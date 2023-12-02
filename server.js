@@ -5,12 +5,16 @@ const mongoose = require('mongoose')
 const app = express()
 const userRoutes = require('./routes/users')
 const documentRoutes = require('./routes/documents')
+const authRoutes = require('./routes/auth')
 const uploadRoutes = require('./routes/upload')
 const authMiddleware = require('./middleware/authMiddleware')
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
+const User = require('./models/userModel')
+const session = require('express-session')
+
 // const httpProxy = require('http-proxy');
 // const proxy = httpProxy.createProxyServer({});
 
@@ -48,6 +52,8 @@ app.use(cors({origin: "*", methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'], c
 // Routes
 app.use('/users', userRoutes)
 app.use('/documents', documentRoutes)
+app.use('/auth', authRoutes)
+
 // app.use('/upload', uploadRoutes)
 
 
