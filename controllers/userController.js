@@ -51,7 +51,7 @@ const updateUser = async (req, res) => {
         const user = await User.findOneAndUpdate(
             { _id: userId },
             {
-                user_name, user_username, user_avatarURL, github_id, google_id, user_password, user_email, user_NIM, user_isAdmin, user_isVerified, user_bio, user_location, user_website, user_linkedin, user_github
+                user_name, user_username, user_avatarURL, github_id, google_id, user_password, user_email, user_NIM, user_isAdmin, user_isVerified, user_bio, user_location, user_website, user_linkedin, user_github, user_twitter
             },
             { new: true } // return the updated data
         );

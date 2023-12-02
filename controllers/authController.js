@@ -2,9 +2,12 @@ require('dotenv').config();
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+// express session
+const session = require('express-session');
 
 const passport= require('passport');
-const User = require('../models/userModel')
+const User = require('../models/userModel');
+const { rapidmigrationassessment } = require('googleapis/build/src/apis/rapidmigrationassessment');
 
 const GithubStrategy = require('passport-github2').Strategy;
 
@@ -16,14 +19,23 @@ passport.use(
         callbackURL: 'http://localhost:4000/auth/callback/github',
         },
         async (accessToken, refreshToken, profile, cb) => {
-            const user = await User.findOne({ githubId: profile.id })
+            const user = await User.findOne({ github_id: profile.id })
             if (!user) {
+                console.log('Profile:')
                 console.log(profile)
                 const user = await User.create({
-                githubId: profile.id,
+                github_id: profile.id,
                 user_name: profile.displayName,
-                user_email: profile.email,
+                user_email: profile.email || "no email",
                 user_username: profile.username,
+                user_password: rapidmigrationassessment + profile.id,
+                user_NIM: null,
+                user_isAdmin: false,
+                user_github: profile._json.html_url,
+                user_bio: profile._json.bio,
+                user_location: profile._json.location,
+                user_twitter: profile._json.twitter_username,
+                user_avatarURL: profile.photos[0].value,
                 user_isVerified: false,
                 })
                 await user.save()

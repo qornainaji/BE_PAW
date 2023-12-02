@@ -18,9 +18,13 @@ const usersSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    google_id: {
+        type: String,
+        required: false
+    },
     user_email: {
         type: String,
-        required: true
+        required: false
     },
     user_NIM: {
         type: String,
