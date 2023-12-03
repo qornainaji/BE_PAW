@@ -40,10 +40,6 @@ app.use(passport.session());
 
 // Use CORS
 app.use(cors({origin: "*", methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'], credentials: true}))
-// app.use(cors({origin: "http://localhost:3000", methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'], credentials: true}))
-
-
-// app.use(cors());
 
 // app.all('/documents/*', (req, res) => {
 //   proxy.web(req, res, {
@@ -67,6 +63,10 @@ app.use('/auth', authRoutes)
 // Protected route, authMiddleware will check for a valid JWT
 app.get('/protected', authMiddleware, (req, res) => {  
   res.sendFile(__dirname + '/public/protected/protected.html')
+})
+
+app.get('/profile', authMiddleware, (req, res) => {
+  res.sendFile(__dirname + '/public/profile/profile.html')
 })
 
 // Login and register routes
