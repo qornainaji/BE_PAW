@@ -10,6 +10,7 @@ const User = require('../models/userModel');
 const { rapidmigrationassessment } = require('googleapis/build/src/apis/rapidmigrationassessment');
 const jwt = require('jsonwebtoken');
 const GithubStrategy = require('passport-github2').Strategy;
+const cookieCutter = require('cookie-cutter');
 
 passport.serializeUser((user, done) => {
     done(null, user._id)
@@ -80,16 +81,19 @@ const githubCallback = async (req, res) => {
     try {
         // get github user data
         const githubUser = req.user
-        console.log("Callback results: " + githubUser)
+        // console.log("Callback results: " + githubUser)
 
         // create token which contains user id
         const token = jwt.sign({ _id: githubUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' })
-        console.log(token)
+        // console.log(token)
         // print the _id from the token
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        console.log(decoded._id)
+        // console.log(decoded._id)
+
         // set token in cookie
-        res.status(200).json({ message: 'User logged in successfully', token: token, user: githubUser }); // send token to client
+        // res.status(200).cookie('token', token, { path: '/', httpOnly: true, maxAge: 3600000, domain: 'localhost', secure: true, sameSite: 'none'})
+        res.redirect('http://localhost:3000/?token=' + token)
+        // res.status(200).json({ message: 'User logged in successfully', token: token, user: githubUser }); // send token to client
     }
     catch (error) {
         console.error(error)

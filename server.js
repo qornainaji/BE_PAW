@@ -50,7 +50,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Use CORS
-app.use(cors({origin: "*", methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'], credentials: true}))
+app.use(cors({
+  origin: '*', 
+  methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'], 
+  credentials: true
+}));
 
 // app.all('/documents/*', (req, res) => {
 //   proxy.web(req, res, {
@@ -64,9 +68,10 @@ app.use(cors({origin: "*", methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'], c
 // });
 
 // Routes
+app.use('/auth', authRoutes)
 app.use('/users', userRoutes)
 app.use('/documents', documentRoutes)
-app.use('/auth', authRoutes)
+
 
 // app.use('/upload', uploadRoutes)
 
