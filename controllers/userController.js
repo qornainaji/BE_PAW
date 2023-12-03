@@ -35,6 +35,16 @@ const extractPropertiesFromBody = (body, properties) => {
     }, {});
 }
 
+const isUserPropertyUnique = async (property, value) => {
+    try{
+        const existingUser = await User.findOne({ [property]: value });
+        return !existingUser;
+    }
+    catch(error){
+        return false;
+    }
+}
+
 // get all user
 const getUsers = paginatedResults(User);
 
@@ -60,11 +70,11 @@ const getUser = async (req, res) => {
 
 // create new user
 const createUser = async (req, res) => {
-    const {user_name, user_username, user_password, user_email, user_NIM, user_isAdmin} = req.body
+    const userData = extractPropertiesFromBody(req.body, userProperties);
 
     // add to database
     try {
-        const user = await User.create({user_name, user_username, github_id, google_id, user_password, user_email, user_NIM, user_isAdmin, user_isVerified})
+        const user = await User.create(userData)
         res.status(200).json(user)
     } catch (error) {
         res.status(400).json({error: error.message})
@@ -73,14 +83,31 @@ const createUser = async (req, res) => {
 
 // update user
 const updateUser = async (req, res) => {
-    const { user_name, user_username, user_password, user_avatarURL, github_id, google_id, user_email, user_NIM, user_isAdmin, user_isVerified, user_bio, user_location, user_website, user_linkedin, user_github, user_twitter } = req.body;
+    const userData = extractPropertiesFromBody(req.body, userProperties);
     const userId = req.params.id;
     try {
+        if(!isUserPropertyUnique('user_username', userData.user_username)){
+            return res.status(400).json({ error: 'Username already exists' });
+        }
+        if(!isUserPropertyUnique('user_email', userData.user_email)){
+            return res.status(400).json({ error: 'Email already exists' });
+        }
+        if(!isUserPropertyUnique('user_NIM', userData.user_NIM)){
+            return res.status(400).json({ error: 'NIM already exists' });
+        }
+        if(!isUserPropertyUnique('github_id', userData.github_id)){
+            return res.status(400).json({ error: 'Github ID already exists' });
+        }
+        if(!isUserPropertyUnique('google_id', userData.google_id)){
+            return res.status(400).json({ error: 'Google ID already exists' });
+        }
+        if(!isUserPropertyUnique('user_name', userData.user_name)){
+            return res.status(400).json({ error: 'Name already exists' });
+        }
+
         const user = await User.findOneAndUpdate(
             { _id: userId },
-            {
-                user_name, user_username, user_avatarURL, github_id, google_id, user_password, user_email, user_NIM, user_isAdmin, user_isVerified, user_bio, user_location, user_website, user_linkedin, user_github, user_twitter
-            },
+            userData,
             { new: true } // return the updated data
         );
         if (!user) {
