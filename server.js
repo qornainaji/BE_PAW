@@ -8,12 +8,12 @@ const documentRoutes = require('./routes/documents')
 const authRoutes = require('./routes/auth')
 const uploadRoutes = require('./routes/upload')
 const authMiddleware = require('./middleware/authMiddleware')
+const authController = require('./controllers/authController')
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
-const User = require('./models/userModel')
-const session = require('express-session')
+const passport = require('passport')
 
 // const httpProxy = require('http-proxy');
 // const proxy = httpProxy.createProxyServer({});
@@ -30,6 +30,13 @@ app.use(express.urlencoded({ extended: true }))
 
 // Use static files
 app.use(express.static('public'))
+
+// Use express-session middleware
+app.use(authController.sessionMiddleware);
+
+// Initialize Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Use CORS
 app.use(cors({origin: "*", methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'], credentials: true}))
@@ -58,10 +65,7 @@ app.use('/auth', authRoutes)
 
 
 // Protected route, authMiddleware will check for a valid JWT
-app.get('/protected', authMiddleware, (req, res) => {
-  // If the user is authenticated, the middleware will attach the user data to the request object
-  // We can then use it to return a personalized response
-  
+app.get('/protected', authMiddleware, (req, res) => {  
   res.sendFile(__dirname + '/public/protected/protected.html')
 })
 
@@ -90,6 +94,3 @@ mongoose.connect(process.env.MONGO_URI)
   .catch((error) => {
     console.log(error)
   })
-
-// PORT=4000
-// MONGO_URI=mongodb+srv://ahmadfauzan190603:pojanPAW@academiateti.snpla5s.mongodb.net/?retryWrites=true&w=majority

@@ -8,8 +8,23 @@ const session = require('express-session');
 const passport= require('passport');
 const User = require('../models/userModel');
 const { rapidmigrationassessment } = require('googleapis/build/src/apis/rapidmigrationassessment');
-
+const jwt = require('jsonwebtoken');
 const GithubStrategy = require('passport-github2').Strategy;
+
+passport.serializeUser((user, done) => {
+    done(null, user._id)
+}
+)
+
+passport.deserializeUser(async (id, done) => {
+    try {
+        const user = await User.findById(id)
+        done(null, user)
+    } catch (error) {
+        done(error)
+    }
+}
+)
 
 passport.use(
     new GithubStrategy(
@@ -50,26 +65,42 @@ passport.use(
     )
 )
 
+const sessionMiddleware = session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false },
+})
+
 const githubSignUp = passport.authenticate('github', { scope: [ 'user:email' ] })
 
 const githubLogin = passport.authenticate('github', { failureRedirect: '/login' })
 
-const getGithubUserData = async (req, res) => {
-    const user = {
-        githubId: req.sesion.passport.user.id,
-        user_name: req.sesion.passport.user.username,
-        user_email: req.sesion.passport.user.emails[0].value,
-    }
-    res.json(user)
-}
+const githubCallback = async (req, res) => {
+    try {
+        // get github user data
+        const githubUser = req.user
+        console.log("Callback results: " + githubUser)
 
-const githubCallback = (req, res) => {
-    res.redirect('/')
+        // create token which contains user id
+        const token = jwt.sign({ _id: githubUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' })
+        console.log(token)
+        // print the _id from the token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+        console.log(decoded._id)
+        // set token in cookie
+        res.cookie('token', token, { httpOnly: true, maxAge: 3600000, domain: 'localhost', secure: true }).redirect('/'); 
+    }
+    catch (error) {
+        console.error(error)
+        res.status(500).json({ error: error.message })
+    }
 }
 
 // Export the module
 module.exports = {
     githubSignUp,
     githubLogin,
-    githubCallback
+    githubCallback,
+    sessionMiddleware,
 };
