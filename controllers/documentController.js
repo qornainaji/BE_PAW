@@ -32,24 +32,6 @@ const uploadFile = async (fileObject) => {
     return data.webViewLink;
 };   
 
-
-// const getFilePDF = async (req, res) => {
-//     try {
-//         console.log(req.body);
-//         console.log(req.file);
-//         const { files } = req;
-//         if (!files || !files[0]) {
-//             throw new Error('No file found in request');
-//         }
-//         await uploadFile(files[0]);
-//         res.status(200).send('File uploaded successfully');
-
-//     } catch (error) {
-//      res.status(500).send(error.message)
-//     }
-// }
-
-
 // get all documents
 const getDocuments = paginatedResults(Document)
 
@@ -70,30 +52,6 @@ const getDocument = async (req, res) => {
 
 // create a new document
 const createDocument = async (req, res) => {
-    // const {doc_title, doc_year, doc_major, doc_description, doc_link} = req.body
-
-    // // add to database
-    // try {
-    //     const document = await Document.create({doc_title, doc_year, doc_major, doc_description, doc_link})
-    //     res.status(200).json(document)
-    // } catch (error) {
-    //     res.status(400).json({error: error.message})
-    // }
-
-    // try {
-    //     console.log(req.body);
-    //     console.log(req.file);
-    //     const { files } = req;
-    //     if (!files || !files[0]) {
-    //         throw new Error('No file found in request');
-    //     }
-    //     await uploadFile(files[0]);
-    //     res.status(200).send('File uploaded successfully');
-
-    // } catch (error) {
-    //     res.status(500).send(error.message)
-    // }
-
     try {
         const {files, body} = req;
         if (!files || !files[0]) {
@@ -121,28 +79,6 @@ const createDocument = async (req, res) => {
     }
         
 }
-
-// const createDocument = async (req, res) => {
-//     const {doc_title, doc_year, doc_major, doc_description, doc_view, doc_date_upload, doc_download} = req.body
-
-//     // add to database
-//     try {
-//         const document = await Document({
-//             doc_title, 
-//             doc_year, 
-//             doc_major, 
-//             doc_description, 
-//             doc_link: req.file.buffer.toString('base64'), 
-//             // doc_view, 
-//             // doc_date_upload, 
-//             // doc_download
-//         });
-//         await document.save();
-//         res.status(200).json(document)
-//     } catch (error) {
-//         res.status(400).json({error: error.message})
-//     }
-// };
 
 // update a document
 const updateDocument = async (req, res) => {
@@ -202,5 +138,4 @@ module.exports = {
     updateDocument,
     deleteDocument,
     searchDocument
-    // deleteDocuments
 }
