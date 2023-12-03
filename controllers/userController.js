@@ -7,8 +7,36 @@ const jwt = require('jsonwebtoken');
 const paginatedResults = require('../middleware/paginationMiddleware,js');
 const Joi = require('joi');
 
+const userProperties = [
+    'user_name',
+    'user_username',
+    'user_password',
+    'user_avatarURL',
+    'github_id',
+    'google_id',
+    'user_email',
+    'user_NIM',
+    'user_isAdmin',
+    'user_isVerified',
+    'user_bio',
+    'user_location',
+    'user_website',
+    'user_linkedin',
+    'user_github',
+    'user_twitter',
+];
+
+const extractPropertiesFromBody = (body, properties) => {
+    return properties.reduce((obj, property) => {
+        if (body[property]) {
+            obj[property] = body[property];
+        }
+        return obj;
+    }, {});
+}
+
 // get all user
-const getUsers = paginatedResults(User)
+const getUsers = paginatedResults(User);
 
 const getAllUsers = async (req, res) => {
     res.json(res.paginatedResults)
