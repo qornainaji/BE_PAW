@@ -23,6 +23,17 @@ app.use(morgan('dev'));
 
 // Helmet for security
 app.use(helmet());
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "default-src 'self' https://github.com; " +
+    "img-src 'self' https://github.com https://avatars.githubusercontent.com; " +
+    "script-src 'self'; " +
+    "style-src 'self' 'unsafe-inline'; " +
+    "font-src 'self' data:;"
+  );
+  next();
+});
 
 // Body parser
 app.use(express.json())
@@ -65,7 +76,7 @@ app.get('/protected', authMiddleware, (req, res) => {
   res.sendFile(__dirname + '/public/protected/protected.html')
 })
 
-app.get('/profile', authMiddleware, (req, res) => {
+app.get('/profile', (req, res) => {
   res.sendFile(__dirname + '/public/profile/profile.html')
 })
 

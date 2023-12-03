@@ -89,7 +89,7 @@ const githubCallback = async (req, res) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
         console.log(decoded._id)
         // set token in cookie
-        res.cookie('token', token, { httpOnly: true, maxAge: 3600000, domain: 'localhost', secure: true }).redirect('/'); 
+        res.status(200).json({ message: 'User logged in successfully', token: token, user: githubUser }); // send token to client
     }
     catch (error) {
         console.error(error)

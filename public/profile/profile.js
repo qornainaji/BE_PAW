@@ -1,41 +1,51 @@
-// Get the ID of the user from the token
-const token = cookies.split('=')[1];
-const decoded = jwt.verify(token, process.env.JWT_SECRET);
-const userId = decoded._id;
-console.log(userId)
+// Purpose: To show the user's profile data
 
-// Get the user from the database using the ID by doing a call to the API
-const user = await axios.get(`http://localhost:4000/api/users/${userId}`)
-console.log(user.data)
+// Function to get user data
+const getUserData = async () => {
+    try {
+        // Get token from cookies by using fetch to the github callback endpoint
+        const callbackResponse = await fetch('http://localhost:4000/auth/callback/github');
+        console.log("Callback response: " + callbackResponse);
+        
+        const cookies = callbackResponse.headers.get('set-cookie');
 
-// show all of the user's data by changing the DOM elements
-// ID format: user_username
-const userAvatar = document.getElementById('user_avatarURL');
-const userUsername = document.getElementById('user_username');
-const userName = document.getElementById('user_name');
-const userEmail = document.getElementById('user_email');
-const userNIM = document.getElementById('user_NIM');
-const userBio = document.getElementById('user_bio');
-const userLocation = document.getElementById('user_location');
-const userWebsite = document.getElementById('user_website');
-const userLinkedin = document.getElementById('user_linkedin');
-const userGithub = document.getElementById('user_github');
-const userTwitter = document.getElementById('user_twitter');
-const googleId = document.getElementById('google_id');
-const githubId = document.getElementById('github_id');
+        console.log("Callback response: " + callbackResponse);
 
-// change the DOM elements
-user_id.innerHTML = user.data._id;
-userAvatar.src = user.data.user_avatarURL;
-userUsername.innerHTML = user.data.user_username;
-userName.innerHTML = user.data.user_name;
-userEmail.innerHTML = user.data.user_email;
-userNIM.innerHTML = user.data.user_NIM;
-userBio.innerHTML = user.data.user_bio;
-userLocation.innerHTML = user.data.user_location;
-userWebsite.innerHTML = user.data.user_website;
-userLinkedin.innerHTML = user.data.user_linkedin;
-userGithub.innerHTML = user.data.user_github;
-userTwitter.innerHTML = user.data.user_twitter;
-googleId.innerHTML = user.data.google_id;
-githubId.innerHTML = user.data.github_id;
+
+        if (!cookies) {
+            throw new Error('Access denied');
+        }
+
+        const token = cookies.split('=')[1];
+        console.log("Token: " + token);
+
+        // Get the user ID from the token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const userId = decoded._id;
+
+        // Get user data from the API
+        const response = await axios.get(`http://localhost:4000/api/users/${userId}`);
+        const user = response.data;
+
+        // Update DOM elements with user data
+        document.getElementById('user_id').innerHTML = user._id;
+        document.getElementById('user_avatarURL').src = user.user_avatarURL;
+        document.getElementById('user_username').innerHTML = user.user_username;
+        document.getElementById('user_name').innerHTML = user.user_name;
+        document.getElementById('user_email').innerHTML = user.user_email;
+        document.getElementById('user_NIM').innerHTML = user.user_NIM;
+        document.getElementById('user_bio').innerHTML = user.user_bio;
+        document.getElementById('user_location').innerHTML = user.user_location;
+        document.getElementById('user_website').innerHTML = user.user_website;
+        document.getElementById('user_linkedin').innerHTML = user.user_linkedin;
+        document.getElementById('user_github').innerHTML = user.user_github;
+        document.getElementById('user_twitter').innerHTML = user.user_twitter;
+        document.getElementById('google_id').innerHTML = user.google_id;
+        document.getElementById('github_id').innerHTML = user.github_id;
+    } catch (error) {
+        console.error('Error fetching user information:', error.message);
+    }
+};
+
+// On window load, get the user data
+window.onload = getUserData;
