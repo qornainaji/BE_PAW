@@ -50,8 +50,8 @@ const checkDuplicateProperties = async (userData) => {
         { property: 'user_username', message: 'Username already exists' },
         { property: 'user_email', message: 'Email already exists' },
         { property: 'user_NIM', message: 'NIM already exists' },
-        { property: 'github_id', message: 'GitHub ID already exists' },
-        { property: 'google_id', message: 'Google ID already exists' },
+        // { property: 'github_id', message: 'GitHub ID already exists' },
+        // { property: 'google_id', message: 'Google ID already exists' },
         { property: 'user_name', message: 'Name already exists' },
     ];
 
@@ -190,7 +190,7 @@ const login = async (req, res) => {
         }
 
         // Password is correct, generate and send a JWT token
-        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ _id: user._id, user_isAdmin: user.user_isAdmin }, process.env.JWT_SECRET, { expiresIn: '1h' });
         res.cookie('token', token, { httpOnly: true, maxAge: 3600000, domain: 'localhost', secure: true });
         console.log("Token: " + token)
 

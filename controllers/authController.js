@@ -84,7 +84,7 @@ const githubCallback = async (req, res) => {
         // console.log("Callback results: " + githubUser)
 
         // create token which contains user id
-        const token = jwt.sign({ _id: githubUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' })
+        const token = jwt.sign({ _id: githubUser._id, user_isAdmin: githubUser.user_isAdmin }, process.env.JWT_SECRET, { expiresIn: '1h' })
         // console.log(token)
         // print the _id from the token
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
