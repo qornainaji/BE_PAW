@@ -45,7 +45,7 @@ const createUser = async (req, res) => {
 
 // update user
 const updateUser = async (req, res) => {
-    const { user_name, user_username, user_password, user_email, user_NIM, user_isAdmin } = req.body;
+    const { user_name, user_username, user_password, user_avatarURL, github_id, google_id, user_email, user_NIM, user_isAdmin, user_isVerified, user_bio, user_location, user_website, user_linkedin, user_github, user_twitter } = req.body;
     const userId = req.params.id;
     try {
         const user = await User.findOneAndUpdate(
