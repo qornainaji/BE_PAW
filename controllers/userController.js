@@ -8,6 +8,7 @@ const paginatedResults = require('../middleware/paginationMiddleware,js');
 const Joi = require('joi');
 
 const userProperties = [
+    '_id',
     'user_name',
     'user_username',
     'user_password',
@@ -50,14 +51,22 @@ const checkDuplicateProperties = async (userData) => {
         { property: 'user_username', message: 'Username already exists' },
         { property: 'user_email', message: 'Email already exists' },
         { property: 'user_NIM', message: 'NIM already exists' },
-        // { property: 'github_id', message: 'GitHub ID already exists' },
+        // { property: 'github_id', message: 'GitHub IzD already exists' },
         // { property: 'google_id', message: 'Google ID already exists' },
         { property: 'user_name', message: 'Name already exists' },
     ];
 
     for (const check of uniqueChecks) {
         if (!await isUserPropertyUnique(check.property, userData[check.property])) {
-            return { error: check.message };
+            const samePropertyUser = await User.findOne({ [check.property]: userData[check.property] });
+            // console.log("Same property user: " + samePropertyUser._id)
+            // console.log("User data: " + userData['_id'])
+            // console.log("Is the same? " + (samePropertyUser._id == userData._id))
+            if (samePropertyUser._id == userData._id) {
+                continue;
+            }
+
+            return { error: check.message + ': ' + userData[check.property] + ' (ID: ' + samePropertyUser._id + ')' };
         }
     }
 
@@ -109,6 +118,7 @@ const createUser = async (req, res) => {
 // update user
 const updateUser = async (req, res) => {
     const userData = extractPropertiesFromBody(req.body, userProperties);
+    console.log("User data: " + JSON.stringify(userData))
     const userId = req.params.id;
     try {
         // check if user already exists
