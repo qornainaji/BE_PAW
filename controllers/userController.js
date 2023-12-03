@@ -45,6 +45,25 @@ const isUserPropertyUnique = async (property, value) => {
     }
 }
 
+const checkDuplicateProperties = async (userData) => {
+    const uniqueChecks = [
+        { property: 'user_username', message: 'Username already exists' },
+        { property: 'user_email', message: 'Email already exists' },
+        { property: 'user_NIM', message: 'NIM already exists' },
+        { property: 'github_id', message: 'GitHub ID already exists' },
+        { property: 'google_id', message: 'Google ID already exists' },
+        { property: 'user_name', message: 'Name already exists' },
+    ];
+
+    for (const check of uniqueChecks) {
+        if (!await isUserPropertyUnique(check.property, userData[check.property])) {
+            return { error: check.message };
+        }
+    }
+
+    return null;
+}
+
 // get all user
 const getUsers = paginatedResults(User);
 
@@ -72,6 +91,12 @@ const getUser = async (req, res) => {
 const createUser = async (req, res) => {
     const userData = extractPropertiesFromBody(req.body, userProperties);
 
+    // check if user already exists
+    const duplicateCheck = await checkDuplicateProperties(userData);
+    if (duplicateCheck) {
+        return res.status(400).json({ error: duplicateCheck.error });
+    }
+
     // add to database
     try {
         const user = await User.create(userData)
@@ -86,23 +111,10 @@ const updateUser = async (req, res) => {
     const userData = extractPropertiesFromBody(req.body, userProperties);
     const userId = req.params.id;
     try {
-        if(!isUserPropertyUnique('user_username', userData.user_username)){
-            return res.status(400).json({ error: 'Username already exists' });
-        }
-        if(!isUserPropertyUnique('user_email', userData.user_email)){
-            return res.status(400).json({ error: 'Email already exists' });
-        }
-        if(!isUserPropertyUnique('user_NIM', userData.user_NIM)){
-            return res.status(400).json({ error: 'NIM already exists' });
-        }
-        if(!isUserPropertyUnique('github_id', userData.github_id)){
-            return res.status(400).json({ error: 'Github ID already exists' });
-        }
-        if(!isUserPropertyUnique('google_id', userData.google_id)){
-            return res.status(400).json({ error: 'Google ID already exists' });
-        }
-        if(!isUserPropertyUnique('user_name', userData.user_name)){
-            return res.status(400).json({ error: 'Name already exists' });
+        // check if user already exists
+        const duplicateCheck = await checkDuplicateProperties(userData);
+        if (duplicateCheck) {
+            return res.status(400).json({ error: duplicateCheck.error });
         }
 
         const user = await User.findOneAndUpdate(
@@ -137,18 +149,17 @@ const deleteUser = async (req, res) => {
 
 // register user
 const register = async (req, res) => {
-    const { user_name, user_username, user_avatarURL, github_id, google_id, user_password, user_email, user_NIM, user_isAdmin, user_isVerified } = req.body;
+    const userData = extractPropertiesFromBody(req.body, userProperties);
     
     try {
         // Check if the user already exists
-        const userExists = await User.findOne({ user_name });
-        if (userExists) {
-            console.log("User exists")
-            return res.status(400).json({ message: 'Username already exists' });
+        const duplicateCheck = await checkDuplicateProperties(userData);
+        if (duplicateCheck) {
+            return res.status(400).json({ error: duplicateCheck.error });
         }
 
         // Create a new user with hashed password
-        const user = new User({ user_name, user_username, user_avatarURL, github_id, google_id, user_password: user_password, user_email, user_NIM, user_isAdmin, user_isVerified });
+        const user = new User(userData);
         await user.save();
 
         // Send a message through the response
