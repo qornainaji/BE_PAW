@@ -24,13 +24,12 @@ const router = express.Router()
 
 // GET all documents
 router.get('/', getDocuments, getAllDocuments)
+// router.get('/', getAllDocuments)
 
 // GET a single document
 router.get('/:id', getDocument)
 
 // POST a new document
-// router.post('/', upload.single('pdf'), createDocument)
-// router.post('/', createDocument)
 router.post('/', upload.any(), createDocument)
 
 
