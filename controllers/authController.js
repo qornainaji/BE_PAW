@@ -32,7 +32,7 @@ passport.use(
         {
         clientID: process.env.GITHUB_ID,
         clientSecret: process.env.GITHUB_SECRET,
-        callbackURL: 'http://localhost:4000/auth/callback/github',
+        callbackURL: process.env.EXPRESS_PUBLIC_URL + 'auth/callback/github',
         },
         async (accessToken, refreshToken, profile, cb) => {
             const user = await User.findOne({ github_id: profile.id })
@@ -41,8 +41,8 @@ passport.use(
                 console.log(profile)
                 const user = await User.create({
                 github_id: profile.id,
-                user_name: profile.displayName,
-                user_email: profile.email || "no email",
+                user_name: profile.displayName || profile.username,
+                user_email: profile.email || "-",
                 user_username: profile.username,
                 user_password: rapidmigrationassessment + profile.id,
                 user_NIM: null,
@@ -59,6 +59,7 @@ passport.use(
             }
             else {
                 console.log('user already exists')
+                console.log("Profile: " + JSON.stringify(profile))
                 console.log(user)
             }
             return cb(null, user)
