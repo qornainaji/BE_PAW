@@ -16,6 +16,7 @@ const {
     updateDocument,
     deleteDocument,
     getAllDocuments,
+    getAllDocumentsWithoutPage,
     // getFilePDF
     // deleteDocuments
 } = require('../controllers/documentController')
@@ -24,7 +25,9 @@ const router = express.Router()
 
 // GET all documents
 router.get('/', getDocuments, getAllDocuments)
-// router.get('/', getAllDocuments)
+
+// GET all documents without pagination
+router.get('/all', getAllDocumentsWithoutPage)
 
 // GET a single document
 router.get('/:id', getDocument)

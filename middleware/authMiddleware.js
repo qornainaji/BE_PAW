@@ -21,11 +21,4 @@ module.exports = function(req, res, next) {
     } catch (error) {
         res.status(400).send('Invalid token');
     }
-
-
-    // jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    //     if (err) return res.status(403).send('Invalid token');
-    //     req.user = user;
-    //     next();
-    // });
 };

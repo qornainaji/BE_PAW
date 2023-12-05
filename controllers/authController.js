@@ -1,7 +1,5 @@
 require('dotenv').config();
 
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 // express session
 const session = require('express-session');
 
@@ -10,7 +8,6 @@ const User = require('../models/userModel');
 const { rapidmigrationassessment } = require('googleapis/build/src/apis/rapidmigrationassessment');
 const jwt = require('jsonwebtoken');
 const GithubStrategy = require('passport-github2').Strategy;
-const cookieCutter = require('cookie-cutter');
 
 passport.serializeUser((user, done) => {
     done(null, user._id)

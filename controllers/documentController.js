@@ -1,4 +1,3 @@
-const mongoose = require('mongoose')
 const Document = require('../models/documentModel')
 const paginatedResults = require('../middleware/paginationMiddleware,js');
 
@@ -39,14 +38,14 @@ const getAllDocuments = async (req, res) => {
     res.json(res.paginatedResults)
 }
 
-// const getAllDocuments = async (req, res) => {
-//     try {
-//         const documents = await Document.find();
-//         res.status(200).json(documents);
-//     } catch (error) {
-//         res.status(500).json({error: error.message});
-//     }
-// };
+const getAllDocumentsWithoutPage = async (req, res) => {
+    try {
+        const documents = await Document.find();
+        res.status(200).json(documents);
+    } catch (error) {
+        res.status(500).json({error: error.message});
+    }
+};
 
 // get a single document
 const getDocument = async (req, res) => {
@@ -141,6 +140,7 @@ const searchDocument = async (req, res) => {
 
 module.exports = {
     getAllDocuments,
+    getAllDocumentsWithoutPage,
     getDocuments,
     getDocument,
     createDocument,

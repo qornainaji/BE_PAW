@@ -81,14 +81,9 @@ usersSchema.methods.generateAuthToken = function () {
     return token;
 };
 
-const validate = (user) => {
-    const schema = Joi.object({
-        user_name: Joi.string().required(),
-        user_email: Joi.string().email(),
-        user_password: Joi.string().required(),
-    });
-    return schema.validate(user);
-};
+usersSchema.methods.matchPassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.user_password);
+}
 
 const User = mongoose.model('User', usersSchema)
 

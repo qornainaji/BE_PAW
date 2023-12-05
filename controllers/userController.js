@@ -1,11 +1,9 @@
 require('dotenv').config()
 
-const mongoose = require('mongoose')
 const User = require('../models/userModel')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const paginatedResults = require('../middleware/paginationMiddleware,js');
-const Joi = require('joi');
 
 const userProperties = [
     '_id',
