@@ -140,28 +140,52 @@ const createUser = async (req, res) => {
 // }
 
 const updateUser = async (req, res) => {
-    // const userData = extractPropertiesFromBody(req.body, userProperties);
     const userId = req.params.id;
-    // const {isVerified} = req.body
+    const { user_name, user_NIM, user_email, user_isAdmin, user_isVerified } = req.body;
+
     try {
-        const checkUser = await User.findById(userId);
-        let user;
-        if (!checkUser) {
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { user_name, user_NIM, user_email, user_isAdmin, user_isVerified },
+            { new: true }
+        );
+
+        if (!updatedUser) {
             return res.status(404).json({ message: 'User not found' });
         }
-        if(checkUser.user_isVerified === true){
-            user = await User.findByIdAndUpdate(userId, {user_isVerified: false}, {new:true})
-            console.log('change to false')
-        }else{
-            user = await User.findByIdAndUpdate(userId, { user_isVerified: true }, { new: true });
-            console.log('change to true');
-        }
-        res.status(200).json(user)
-      } catch (error) {
+
+        res.status(200).json(updatedUser);
+    } catch (error) {
         console.error(`Error updating user: ${error}`);
-        res.status(500).json({message: 'Internal server error'})
-      }
+        res.status(500).json({ message: 'Internal server error' });
+    }
 };
+
+
+
+// const updateUser = async (req, res) => {
+//     // const userData = extractPropertiesFromBody(req.body, userProperties);
+//     const userId = req.params.id;
+//     // const {isVerified} = req.body
+//     try {
+//         const checkUser = await User.findById(userId);
+//         let user;
+//         if (!checkUser) {
+//             return res.status(404).json({ message: 'User not found' });
+//         }
+//         if(checkUser.user_isVerified === true){
+//             user = await User.findByIdAndUpdate(userId, {user_isVerified: false}, {new:true})
+//             console.log('change to false')
+//         }else{
+//             user = await User.findByIdAndUpdate(userId, { user_isVerified: true }, { new: true });
+//             console.log('change to true');
+//         }
+//         res.status(200).json(user)
+//       } catch (error) {
+//         console.error(`Error updating user: ${error}`);
+//         res.status(500).json({message: 'Internal server error'})
+//       }
+// };
 
 
 // delete user
