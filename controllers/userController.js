@@ -114,30 +114,55 @@ const createUser = async (req, res) => {
 }
 
 // update user
-const updateUser = async (req, res) => {
-    const userData = extractPropertiesFromBody(req.body, userProperties);
-    console.log("User data: " + JSON.stringify(userData))
-    const userId = req.params.id;
-    try {
-        // check if user already exists
-        const duplicateCheck = await checkDuplicateProperties(userData);
-        if (duplicateCheck) {
-            return res.status(400).json({ error: duplicateCheck.error });
-        }
+// const updateUser = async (req, res) => {
+//     const userData = extractPropertiesFromBody(req.body, userProperties);
+//     console.log("User data: " + JSON.stringify(userData))
+//     const userId = req.params.id;
+//     try {
+//         // check if user already exists
+//         const duplicateCheck = await checkDuplicateProperties(userData);
+//         if (duplicateCheck) {
+//             return res.status(400).json({ error: duplicateCheck.error });
+//         }
 
-        const user = await User.findOneAndUpdate(
-            { _id: userId },
-            userData,
-            { new: true } // return the updated data
-        );
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
+//         const user = await User.findOneAndUpdate(
+//             { _id: userId },
+//             userData,
+//             { new: true } // return the updated data
+//         );
+//         if (!user) {
+//             return res.status(404).json({ error: 'User not found' });
+//         }
+//         res.status(200).json(user);
+//     } catch (error) {
+//         res.status(400).json({ error: error.message });
+//     }
+// }
+
+const updateUser = async (req, res) => {
+    // const userData = extractPropertiesFromBody(req.body, userProperties);
+    const userId = req.params.id;
+    // const {isVerified} = req.body
+    try {
+        const checkUser = await User.findById(userId);
+        let user;
+        if (!checkUser) {
+            return res.status(404).json({ message: 'User not found' });
         }
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-}
+        if(checkUser.user_isVerified === true){
+            user = await User.findByIdAndUpdate(userId, {user_isVerified: false}, {new:true})
+            console.log('change to false')
+        }else{
+            user = await User.findByIdAndUpdate(userId, { user_isVerified: true }, { new: true });
+            console.log('change to true');
+        }
+        res.status(200).json(user)
+      } catch (error) {
+        console.error(`Error updating user: ${error}`);
+        res.status(500).json({message: 'Internal server error'})
+      }
+};
+
 
 // delete user
 const deleteUser = async (req, res) => {
