@@ -75,8 +75,8 @@ const createDocument = async (req, res) => {
             doc_year,
             doc_major,
             doc_description,
-            doc_link: id, // Use the id obtained from Google Drive
-            doc_id: webViewLink, // Use the id obtained from Google Drive
+            doc_link: webViewLink, // Use the id obtained from Google Drive
+            doc_id: id, // Use the id obtained from Google Drive
             doc_view,
             doc_date_upload,
             doc_download
