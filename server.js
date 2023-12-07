@@ -10,6 +10,8 @@ const uploadRoutes = require('./routes/upload')
 const authMiddleware = require('./middleware/authMiddleware')
 const authController = require('./controllers/authController')
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+var csrf = require('csurf');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
@@ -34,6 +36,14 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+// CSRF protection (deactivated)
+// app.use(cookieParser());
+// app.use(csrf({ cookie: true }));
+// app.use((req, res, next) => {
+//   res.cookie('XSRF-TOKEN', req.csrfToken());
+//   next();
+// }
 
 // Body parser
 app.use(express.json())

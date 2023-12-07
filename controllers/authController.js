@@ -90,7 +90,7 @@ const githubCallback = async (req, res) => {
 
         // set token in cookie
         // res.status(200).cookie('token', token, { path: '/', httpOnly: true, maxAge: 3600000, domain: 'localhost', secure: true, sameSite: 'none'})
-        res.redirect('http://localhost:3000/?token=' + token)
+        res.redirect(process.env.NEXT_PUBLIC_URL + '?token=' + token)
         // res.status(200).json({ message: 'User logged in successfully', token: token, user: githubUser }); // send token to client
     }
     catch (error) {
