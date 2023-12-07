@@ -27,7 +27,7 @@ const userProperties = [
 
 const extractPropertiesFromBody = (body, properties) => {
     return properties.reduce((obj, property) => {
-        if (body[property]) {
+        if (body.hasOwnProperty(property) && body[property] !== undefined) {
             obj[property] = body[property];
         }
         return obj;
@@ -54,12 +54,14 @@ const checkDuplicateProperties = async (userData) => {
         { property: 'user_name', message: 'Name already exists' },
     ];
 
+    console.log("User data in Check Duplicate: " + JSON.stringify(userData))
+
     for (const check of uniqueChecks) {
         if (!await isUserPropertyUnique(check.property, userData[check.property])) {
             const samePropertyUser = await User.findOne({ [check.property]: userData[check.property] });
-            // console.log("Same property user: " + samePropertyUser._id)
-            // console.log("User data: " + userData['_id'])
-            // console.log("Is the same? " + (samePropertyUser._id == userData._id))
+            console.log("Same property user: " + samePropertyUser._id)
+            console.log("User data: " + userData['_id'])
+            console.log("Is the same? " + (samePropertyUser._id == userData._id))
             if (samePropertyUser._id == userData._id) {
                 continue;
             }
@@ -207,6 +209,7 @@ const deleteUser = async (req, res) => {
 // register user
 const register = async (req, res) => {
     const userData = extractPropertiesFromBody(req.body, userProperties);
+    console.log("Received Body: " + JSON.stringify(req.body))
     
     try {
         // Check if the user already exists
@@ -214,6 +217,8 @@ const register = async (req, res) => {
         if (duplicateCheck) {
             return res.status(400).json({ error: duplicateCheck.error });
         }
+
+        console.log("User data: " + JSON.stringify(userData))
 
         // Create a new user with hashed password
         const user = new User(userData);
