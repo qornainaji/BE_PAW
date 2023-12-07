@@ -141,12 +141,12 @@ const createUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     const userId = req.params.id;
-    const { user_name, user_NIM, user_email, user_isAdmin, user_isVerified } = req.body;
+    const { user_username, user_name, user_NIM, user_email, user_isAdmin, user_isVerified } = req.body;
 
     try {
         const updatedUser = await User.findByIdAndUpdate(
             userId,
-            { user_name, user_NIM, user_email, user_isAdmin, user_isVerified },
+            { user_username, user_name, user_NIM, user_email, user_isAdmin, user_isVerified },
             { new: true }
         );
 
