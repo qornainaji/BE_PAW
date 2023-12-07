@@ -62,9 +62,13 @@ app.use(passport.session());
 // Use CORS
 app.use(cors({
   origin: '*', 
-  methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'], 
-  credentials: true
+  methods: ['GET', 'HEAD', 'POST', 'PATCH', 'DELETE', 'PUT'], 
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  preflightContinue: true,
+  optionsSuccessStatus: 204
 }));
+
 
 // app.all('/documents/*', (req, res) => {
 //   proxy.web(req, res, {

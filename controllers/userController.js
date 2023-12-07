@@ -11,6 +11,7 @@ const userProperties = [
     'user_username',
     'user_password',
     'user_avatarURL',
+    'user_avatarImage',
     'github_id',
     'google_id',
     'user_email',

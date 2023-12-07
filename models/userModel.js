@@ -42,6 +42,10 @@ const usersSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    user_avatarImage: {
+        type: String,
+        required: false
+    },
     user_bio: {
         type: String,
         required: false
@@ -77,7 +81,7 @@ usersSchema.pre('save', async function(next) {
 });
 
 usersSchema.methods.generateAuthToken = function () {
-    const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ _id: this._id, user_isAdmin: this.user_isAdmin }, process.env.JWT_SECRET);
     return token;
 };
 
